@@ -3,7 +3,9 @@ name = "proj-herritage-tree"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Experiences",email = "113293259+ExperiencesXP@users.noreply.github.com"}
+    {name = "Experiences",email = "113293259+ExperiencesXP@users.noreply.github.com"},
+    {name = "Blockgameentity",email = "git@desu.re"},
+    {name = "Lufnin",email="idk@example.com"}
 ]
 license = "MIT"
 readme = "README.md"

@@ -43,7 +43,7 @@ Pronouns.PRESETS.update(
     {
         "male": Pronouns("he", "him", "his", "his", "himself"),
         "female": Pronouns("she", "her", "her", "hers", "herself"),
-        "they": Pronouns("they", "them", "their", "theirs", "themselves"),
+        "other": Pronouns("they", "them", "their", "theirs", "themselves"),
     }
 )
 
@@ -74,7 +74,7 @@ class Person:
                 parent_line.append("no known father")
 
         if not parent_line:
-            parent_line.append("has no known parents")
+            parent_line.append(f"{self.pronouns.subject} has no known parents")
 
         parents = " and ".join(parent_line)
         return f"{self.name}'s {parents}."

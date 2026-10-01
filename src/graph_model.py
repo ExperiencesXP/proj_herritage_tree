@@ -175,7 +175,9 @@ class CsrAdjacency:
         return self.edges[self.offset[i] : self.offset[i + 1]]
 
 
-def build_csr(graph: FamilyGraph, members: Iterable[Person] | None = None) -> CsrAdjacency:
+def build_csr(
+    graph: FamilyGraph, members: Iterable[Person] | None = None
+) -> CsrAdjacency:
     """Build the CSR adjacency of ``Ē`` over ``members`` (or the whole population)."""
     ordered = tuple(members) if members is not None else graph.persons
     local = {p: i for i, p in enumerate(ordered)}

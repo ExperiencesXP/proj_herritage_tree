@@ -56,7 +56,9 @@ def neighbours_of(graph: FamilyGraph) -> NeighboursFn:
 def _parents(node: Any) -> tuple[Any, ...]:
     """Parent slots of a person-like object (child → parent direction, §1.1)."""
     return tuple(
-        q for q in (getattr(node, "mom", None), getattr(node, "dad", None)) if q is not None
+        q
+        for q in (getattr(node, "mom", None), getattr(node, "dad", None))
+        if q is not None
     )
 
 

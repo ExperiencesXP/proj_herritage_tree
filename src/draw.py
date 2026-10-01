@@ -98,13 +98,17 @@ def assign_ranks(cluster: Cluster, delta: int = 1) -> dict[Any, int]:
 
     ranks = {v: 0 for v in members}
     indegree = {v: len(parents[v]) for v in members}
-    ready = deque(sorted((v for v in members if indegree[v] == 0), key=lambda p: p.name))
+    ready = deque(
+        sorted((v for v in members if indegree[v] == 0), key=lambda p: p.name)
+    )
     processed = 0
     while ready:
         parent = ready.popleft()
         processed += 1
         for child in children[parent]:
-            ranks[child] = max(ranks[child], ranks[parent] + delta)  # longest path (§6.1)
+            ranks[child] = max(
+                ranks[child], ranks[parent] + delta
+            )  # longest path (§6.1)
             indegree[child] -= 1
             if indegree[child] == 0:
                 ready.append(child)
@@ -154,12 +158,14 @@ def _barycenter_sweep(
     order = range(len(layers)) if forward else range(len(layers) - 1, -1, -1)
     for li in order:
         nodes = layers[li]
+
         def bary(node: Any) -> tuple[float, int]:
             nbs = neighbours[node]
             if not nbs:
                 return float(pos[node]), pos[node]  # isolated: keep position
             b = sum(pos[w] for w in nbs if w in pos) / len(nbs)
             return b, pos[node]
+
         nodes.sort(key=bary)  # stable: ties broken by current position
         layers[li] = nodes
         for i, node in enumerate(nodes):
@@ -238,6 +244,7 @@ def layout_cluster_map(
     vertex sets with no edges between them, so the map step is embarrassingly parallel
     and needs no locks.  Otherwise each cluster costs Θ(|C_i| + |E(C_i)|).
     """
+
     def draw(cluster: Cluster) -> Layout:
         return layout_cluster(cluster, delta=delta, sweeps=sweeps, order=order)
 
@@ -267,14 +274,12 @@ def to_mermaid(
     return "\n".join(lines)
 
 
-def to_dot(
-    cluster: Cluster, *, label: Callable[[Any], str] = lambda p: p.name
-) -> str:
+def to_dot(cluster: Cluster, *, label: Callable[[Any], str] = lambda p: p.name) -> str:
     """Graphviz export of the same layout contract: rankdir=TB, parent → child arrows."""
     members = tuple(sorted(cluster.members, key=lambda p: p.name))
     ids = {p: f"n{i}" for i, p in enumerate(members)}
     esc = lambda s: s.replace('"', '\\"')
-    lines = ['digraph {', '    rankdir=TB; node [shape=box];']
+    lines = ["digraph {", "    rankdir=TB; node [shape=box];"]
     lines += [f'    {ids[p]} [label="{esc(label(p))}"];' for p in members]
     lines += [f"    {ids[parent]} -> {ids[child]};" for child, parent in cluster.edges]
     lines.append("}")

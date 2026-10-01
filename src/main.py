@@ -44,6 +44,7 @@ Pronouns.PRESETS.update(
         "male": Pronouns("he", "him", "his", "his", "himself"),
         "female": Pronouns("she", "her", "her", "hers", "herself"),
         "other": Pronouns("they", "them", "their", "theirs", "themselves"),
+        "they": Pronouns("they", "them", "their", "theirs", "themselves"),
     }
 )
 

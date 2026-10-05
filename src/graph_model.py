@@ -1,6 +1,6 @@
 """Explicit graph view over the family data — `docs/cluster_map_and_recursive_search.md` §1.
 
-``V`` is the population of :class:`main.Person` objects, ``E = {(p, mom(p)), (p, dad(p))}``
+``V`` is the population of :class:`person.Person` objects, ``E = {(p, mom(p)), (p, dad(p))}``
 is the child → parent edge set, and ``Ē`` is its undirected shadow (cluster membership is
 orientation-insensitive, §1.1).  Invariant **I1** (``deg⁻(v) ≤ 2``) yields ``m = |E| ≤ 2n``
 (§1.2, equation 1), so every ``O(n + m)`` traversal in this project is ``Θ(n)``.
@@ -18,7 +18,7 @@ from array import array
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
-from main import Person
+from person import Person
 
 __all__ = [
     "FamilyGraph",

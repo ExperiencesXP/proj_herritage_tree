@@ -1,6 +1,6 @@
 """Shared fixtures for the test suite of `docs/cluster_map_and_recursive_search.md`.
 
-The tests import sibling modules (``main``, ``graph_model``, ``search``, ``cluster_map``,
+The tests import sibling modules (``person``, ``graph_model``, ``search``, ``cluster_map``,
 ``draw``) as top-level names; that works because ``pyproject.toml`` puts ``src`` on
 ``sys.path`` via ``[tool.pytest.ini_options] pythonpath``.
 """
@@ -20,9 +20,9 @@ if str(SRC) not in sys.path:  # standalone `pytest src/tests` also works
 @pytest.fixture()
 def person_cls():
     """The ``Person`` type, imported lazily so collection never fails on missing deps."""
-    import main
+    import person
 
-    return main.Person
+    return person.Person
 
 
 @pytest.fixture()

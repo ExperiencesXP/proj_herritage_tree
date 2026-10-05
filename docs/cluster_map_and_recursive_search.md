@@ -1,6 +1,6 @@
 # Cluster Map & Recursive Search over Family Graphs — Design & Analysis
 
-**Scope.** Model the family tree implied by [`src/main.py`](../src/main.py) as a graph in which every
+**Scope.** Model the family tree implied by [`src/person.py`](../src/person.py) as a graph in which every
 `Person` is a node and every parental connection (`mom`, `dad`) is an edge. Derive an algorithm that
 (a) partitions the graph into *clusters* (connected components), (b) draws a map over each cluster,
 and (c) finds all members of a cluster recursively. This document specifies the model, the algorithm,
@@ -93,7 +93,7 @@ $$
 H_i = G[C_i] = \bigl(C_i,\ \{(u,v)\in E : u,v \in C_i\}\bigr).
 $$
 
-### 1.4 Data types (design sketch, compatible with `src/main.py`)
+### 1.4 Data types (design sketch, compatible with `src/person.py`)
 
 ```python
 from dataclasses import dataclass, field
@@ -481,7 +481,7 @@ supply $C_i$ and $E(C_i)$.
 
 ## 7. Relationship to existing code
 
-| `src/main.py` element | Role in the design |
+| `src/person.py` element | Role in the design |
 |---|---|
 | `Person.mom`, `Person.dad` | The two parental edges per node (Section 1.1) |
 | `Person.name` | Natural key for external maps / Mermaid labels |

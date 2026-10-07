@@ -27,13 +27,13 @@
     literate={æ}{{\ae}}1 {ø}{{\o}}1 {å}{{\aa}}1
              {Æ}{{\AE}}1 {Ø}{{\O}}1 {Å}{{\AA}}1
              {é}{{\'{e}}}1 {É}{{\'{E}}}1
-             {§}{{\S}}1 {—}{{---}}1 {–}{{--}}1
+             {§}{{\S}}1 {—}{{,}}1 {–}{{--}}1
              {Θ}{{$\Theta$}}1 {α}{{$\alpha$}}1 {φ}{{$\varphi$}}1
              {≤}{{$\leq$}}1 {→}{{$\rightarrow$}}1 {∪}{{$\cup$}}1
              {Ē}{{$\bar{E}$}}1 {⁻}{{$^-$}}1 {̃}{{\~{}}}1
 }
 
-\title{Synopsis --- \textit{Fælles aner}}
+\title{Synopsis, \textit{Fælles aner}}
 \author{[projektdeltagere]}
 \date{}
 \emergencystretch=2em
@@ -66,10 +66,10 @@ barn. Da en person højst har to forældre, er grafen tynd: der er aldrig flere
 end dobbelt så mange kanter som personer.
 
 To idéer bærer projektet. For det første opdeles befolkningen i \emph{klynger}
---- familier der hænger sammen: to personer hører til samme klynge, hvis man
+, familier der hænger sammen: to personer hører til samme klynge, hvis man
 kan gå fra den ene til den anden ved at følge forældre- og børneforbindelser,
 uanset retning. For det andet findes en persons \emph{forfædre} ved at følge
-mor- og far-referencerne opad, indtil der ikke er flere at følge --- og hver
+mor- og far-referencerne opad, indtil der ikke er flere at følge, og hver
 person huskes undervejs, så genbesøg i sammenblandede familier kun behandles
 én gang. To personer er beslægtede, når deres forfædre overlapper.
 
@@ -110,7 +110,7 @@ er_i_familie(a, b):
 \end{lstlisting}
 
 Fordi hver person og hver reference kun behandles et konstant antal gange,
-vokser køretiden lineært med familiens størrelse --- målt til under en
+vokser køretiden lineært med familiens størrelse, målt til under en
 tiendedel sekund for 20.000 personer. Når slægtninge får børn sammen, optræder de samme
 forfædre flere gange i stamtræet; fordi programmet tæller hver person én gang,
 forbliver antallet af forfædre lille og håndterligt, selv i store familier.
@@ -125,7 +125,7 @@ Brugeren installerer med \texttt{poetry install} og kører hele programmet med
 én kommando, \texttt{poetry run python src}. Programmet indlæser en befolkning
 af personer, bygger klusterkortet og svarer på spørgsmål om familien:
 hvilket kluster en person hører til, hvem personens forfædre og efterkommere
-er, en målrettet søgning med tidligt stop, og --- som det centrale ---
+er, en målrettet søgning med tidligt stop, og, som det centrale,
 \texttt{find\_common\_ancestor()} og \texttt{is\_related()}, der besvarer
 spørgsmålet om fælles aner. Hvert kluster tegnes som et lagdelt stamtræ med
 \texttt{matplotlib.pyplot} og skrives til \texttt{out/}, og hvert kluster kan
@@ -141,21 +141,21 @@ is_related(kid, solo) = False
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.85\textwidth]{figurer/familie_demo.pdf}
-\caption{Demo-familien tegnet af programmets eget view-modul: to klynger ---
+\includegraphics[width=0.85\textwidth]{figurer/familie_demo.png}
+\caption{Demo-familien tegnet af programmets eget view-modul: to klynger,
 sammenbrudsfamilien til venstre og den isolerede person \texttt{solo} til højre.}
 \end{figure}
 
 Den indbyggede demo-familie har to klynger (figuren ovenfor): en sammenbrudt
 familie, hvor \texttt{ada} er forælder til både \texttt{mia} og \texttt{dan},
-og den isolerede person \texttt{solo}. Opgavens \emph{store familie} ---
-fjorten personer over fire generationer --- er tegnet herunder: et færdigt
+og den isolerede person \texttt{solo}. Opgavens \emph{store familie},
+fjorten personer over fire generationer, er tegnet herunder: et færdigt
 stamtræ, hvor programmets eget spørgsmål finder de fælles aner for de to
 forældre nederst, som er i familie med hinanden.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\textwidth]{figurer/stor_familie.pdf}
+\includegraphics[width=0.75\textwidth]{figurer/stor_familie.png}
 \caption{Opgavens store familie: fjorten personer, fire generationer, én
 klynge. Forældrene til \texttt{emma} og \texttt{maja} deler de samme to
 forfædre, hvilket programmet finder automatisk.}
@@ -208,10 +208,10 @@ hører sammen; controlleren gemmer sessionens tilstand), specialmetoden
 \texttt{\_\_str\_\_} der gør objekter læsbare ved udskrift, klassevariabler
 (\texttt{Pronouns.PRESETS}, \texttt{Person.DEFAULT\_NAMES}), immutabilitet
 hvor det giver mening (\texttt{Pronouns} er en frossen dataklasse) og
-\emph{composition} frem for nedarvning --- familien bygges af objekter, der
+\emph{composition} frem for nedarvning, familien bygges af objekter, der
 refererer hinanden, ikke af en nedarvningshierarki. Standardnavnet på en
 person følger stedordene: \texttt{John Doe} ved han-ord, \texttt{Jane Doe} ved
-hun-ord, \texttt{Alex Doe} ved de-ord og \texttt{An Other} ellers.
+hun-ord, \texttt{An Other} ved de-ord og \texttt{An Other} ellers.
 
 Algoritmerne er valgt, så alle dele vokser lineært med familiens størrelse.
 Klusterkortet gennemgår hver person og hver reference én gang; klyngerne kan
@@ -220,7 +220,7 @@ peger mod sin repræsentant, og stier halveres ved opslag, så sammenlægninger
 tager næsten konstant tid. Forfædre-udregningen memoiserer: hver person
 gemmes efter første besøg, så store familier med sammenblandede slægtninge
 ikke regnes om. Søgninger bruger en eksplicit arbejdsliste frem for rekursion
---- det beskytter mod meget dybe familier --- og en målrettet søgning stopper
+, det beskytter mod meget dybe familier, og en målrettet søgning stopper
 så snart svaret er fundet.
 
 % ─────────────────────────────────────────────────────────────────────────────
@@ -230,13 +230,13 @@ så snart svaret er fundet.
 Produktet lever op til kravene i Projekt.docx og afsnit 7.10; den punktvise
 dokumentation findes i bilaget bagerst. Kort sagt: programmet er skrevet i Python,
 visualiseringen bruger \texttt{matplotlib.pyplot} (view-laget), arkitekturen
-er MVC, og alle opgavens funktionskrav er opfyldt --- inklusive
+er MVC, og alle opgavens funktionskrav er opfyldt, inklusive
 \texttt{find\_common\_ancestor()} og \texttt{is\_related()}, der besvarer
 spørgsmålet om fælles aner, og den store familie med stamtræ. To bevidste valg
 er dokumenteret i bilaget: koden er skrevet på engelsk, så attributterne
 \texttt{name}/\texttt{mom}/\texttt{dad} svarer til klassediagrammets
 \texttt{navn}/\texttt{mor}/\texttt{far}, og \emph{fælles ane} tæller personen
-selv med, så en forælder og et barn regnes som beslægtede --- ellers ville
+selv med, så en forælder og et barn regnes som beslægtede, ellers ville
 spørgsmålet give forkert svar for netop den relation.
 
 % ─────────────────────────────────────────────────────────────────────────────
@@ -266,7 +266,7 @@ at modellen følger opgaven og kun tillader to forældre pr. person, og at
 Mermaid/Graphviz-uddragene skal renderes eksternt. Naturlige udvidelser vil
 være filindlæsning, en grafisk brugerflade og en mere generel forældremodel.
 
-
+\appendix
 \section{Bilag Kravdokumentation: produktet vs. kravene}
 % ═════════════════════════════════════════════════════════════════════════════
 
@@ -295,7 +295,7 @@ Test af \texttt{\_\_str\_\_}
 Standardnavne efter stedord (John/Jane/An Other)
   & \texttt{test\_default\_name\_follows\_pronouns} \\
 Stor familie, mindst tre generationer
-  & figur \texttt{stor\_familie.pdf} (14 personer, 4 generationer) \\
+  & figur \texttt{stor\_familie.png} (14 personer, 4 generationer) \\
 Tegn et stamtræ
   & \texttt{view.render\_cluster} \\
 \texttt{find\_common\_ancestor()} returnerer liste over fælles aner
@@ -313,16 +313,15 @@ MVC-arkitektur
 
 \bigskip
 \noindent\textbf{Svar på spørgsmålet ``Hvilken type relation er der tale om?''}
-Forbindelsen mellem \texttt{Person}-objekterne er en \emph{assosiation} ---
+Forbindelsen mellem \texttt{Person}-objekterne er en \emph{assosiation},
 mere præcist \emph{aggregering} (``har en''-relation): et objekt har referencer
 til andre \texttt{Person}-objekter som mor/far, objekterne eksisterer uafhængigt
-af hinanden, relationen er valgfri (\texttt{None}), og den er \emph{refleksiv}
---- samme klasse i begge ender. Det er ikke nedarvning.
+af hinanden, relationen er valgfri (\texttt{None}), og den er \emph{refleksiv}, samme klasse i begge ender. Det er ikke nedarvning.
 
 \bigskip
 \noindent\textbf{Definition-valg.} Spørgsmålet er om \emph{mindst} en fælles
 ane. Forfædre-mængden tæller også personen selv med, så en forælder
-og et barn tælles som beslægtede --- ellers ville \texttt{is\_related(ada, kid)}
+og et barn tælles som beslægtede, ellers ville \texttt{is\_related(ada, kid)}
 give \texttt{False}, uagtet at ada er kids bedstemor.
 
 \end{document}

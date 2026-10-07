@@ -309,8 +309,8 @@ def test_default_name_follows_pronouns(person_cls):
     assert person_cls(pronouns=presets["male"]).name == "John Doe"
     assert person_cls(pronouns=presets["female"]).name == "Jane Doe"
     assert person_cls(pronouns=presets["other"]).name == "An Other"
-    assert person_cls(pronouns=presets["they"]).name == "Alex Doe"
-    assert person_cls().name == "Alex Doe"
+    assert person_cls(pronouns=presets["they"]).name == "An Other"
+    assert person_cls().name == "An Other"
     assert person_cls(name="ada").name == "ada"
 
 

@@ -5,7 +5,7 @@ out/
 synopsis/bilag.aux
 synopsis/bilag.log
 synopsis/bilag.out
-.mathsense/
+.mathsense
 synopsis/bilag.fdb_latexmk
 synopsis/bilag.fls
 synopsis/.hermes-tmp*

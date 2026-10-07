@@ -48,7 +48,7 @@ def main() -> int:
     people = build_demo_population()
     app = FamilyController(people)
 
-    print("Heritage-tree cluster map (docs/cluster_map_and_recursive_search.md)")
+    print("Heritage-tree cluster map")
     facts = app.verify_consistency()
     cmap = app.cluster_map
     assert cmap is not None

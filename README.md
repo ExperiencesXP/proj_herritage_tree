@@ -41,18 +41,3 @@ bredde-først-reference, antallet af klynger er personer minus sammenlægninger,
 kæder klarer de iterative traverseringer, cyklusser afvises, skaleringen er
 nær-lineær, og 7.10-spørgsmålene (`find_common_ancestor`, `is_related`) giver de
 forventede svar.
-
-## Arkitektur (MVC)
-
-Modellen ligger i pakken `src/models/` og importeres som `models.person`,
-`models.search`, … . Koden er bevidst uden kommentarer og docstrings; dokumentationen
-står her og i synopsen (`synopsis/`). Koden er skrevet på engelsk — attributterne
-`name`, `mom`, `dad` svarer til klassediagrammets `navn`, `mor`, `far`. Standardnavnet
-på en person følger stedordene: `John Doe` ved han-ord, `Jane Doe` ved hun-ord,
-`Alex Doe` ved de-ord og `An Other` ellers.
-
-| Lag | Moduler | Rolle |
-|---|---|---|
-| Model | `src/models/` (`person`, `graph_model`, `cluster_map`, `search`) | data (`Person`, `FamilyGraph`) og algoritmer (klusterkort, rekursiv søgning, fælles aner) |
-| View | `src/draw.py`, `src/view.py` | lagdelt Sugiyama-layout, Mermaid/Graphviz-uddrag, matplotlib-figurer |
-| Controller | `src/controller.py`, `src/__main__.py` | `FamilyController`-facade og indgangspunktet der kører pipeline |

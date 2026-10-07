@@ -54,7 +54,7 @@ class Person:
         "male": "John Doe",
         "female": "Jane Doe",
         "other": "An Other",
-        "they": "Alex Doe",
+        "they": "An Other",
     }
 
     def __init__(

@@ -53,6 +53,10 @@ forkert. To søskende deler forældrene; to fætre deler bedsteforældrene; frem
 giver tom liste. Eksempel i stor-familie-figuren: `find_common_ancestor(anders,
 line) = [else, ole]` (forældrenes søskendepar), `is_related(emma, pia) = True`.
 
+**Beslutning:** koden forbliver **engelsk** (`name`, `mom`, `dad` — ingen
+omdøbning til `navn`/`mor`/`far`). Synopsen dokumenterer mappingen til bogens
+klassediagram i stedet (se bilag F).
+
 ## Forslag til indhold pr. afsnit
 
 1. **Forblad** — titel, projektdeltagere, klasse, dato. Mangler: rigtige navne
@@ -158,5 +162,3 @@ PNG-kopier ligger ved siden af (til preview/README).
   fyldes.
 - Overvej om Mermaid-uddragene skal vises som renderede diagrammer i bilaget
   (kan renderes på GitHub/i VS Code-udvidelsen Mermaid).
-- Overvej om attributterne skal omdøbes til dansk (`navn`, `mor`, `far`) for
-  bogstavelig overensstemmelse med bogens klassediagram — se noten ved 7.10.

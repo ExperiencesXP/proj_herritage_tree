@@ -20,7 +20,9 @@ and `poetry run python src/__main__.py`.)
 
 The entry point runs the whole pipeline over the demo family — index -> cluster map ->
 search -> layered layout -> Mermaid/Graphviz export -> **matplotlib figures**, written to
-`out/cluster_<id>.png` (the visualisation required by the project assignment).
+`out/cluster_<id>.png` (the visualisation required by the project assignment), and answers
+the assignment's kinship question from section 7.10 via `is_related()` and
+`find_common_ancestor()`.
 
 ## Tests
 
@@ -30,7 +32,8 @@ poetry run pytest
 
 The suite pins the verification plan of the design doc (§8): cluster maps agree with an
 independent BFS reference, identity (3) `k = n − s` holds, deep chains survive the
-iterative traversals, cycles are flagged, and the scaling is near-linear.
+iterative traversals, cycles are flagged, the scaling is near-linear, and the 7.10
+kinship queries (`find_common_ancestor`, `is_related`) return the expected answers.
 
 ## Architecture (MVC)
 

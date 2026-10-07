@@ -425,13 +425,16 @@ Koden er udviklet på \texttt{dev}-branchen i repoet
 \begin{center}
 \url{https://github.com/ExperiencesXP/proj_herritage_tree}
 \end{center}
-Commit-oversigten pr. 2026-10-07:
+Commit-oversigten pr. 2026-10-07 (nyeste øverst; den afsluttende commit til
+bilagene ligger øverst i repoet):
 
 \begin{center}\footnotesize
 \begin{tabular}{@{}llp{6,9cm}@{}}
 \toprule
 \textbf{Hash} & \textbf{Dato} & \textbf{Besked} \\
 \midrule
+\texttt{8c218d7} & 2026-10-07 22:31 & feat: implement 7.10 kinship queries (\texttt{find\_common\_ancestor}, \texttt{is\_related}) \\
+\texttt{d3aad43} & 2026-10-07 20:00 & docs: add synopsis material (figures, LaTeX appendix, writing notes) \\
 \texttt{c163937} & 2026-10-07 19:49 & docs: fix clone URL and document running, tests and MVC layers \\
 \texttt{c35db37} & 2026-10-07 19:49 & feat: add matplotlib visualization and MVC controller \\
 \texttt{893432f} & 2026-10-07 19:49 & fix: use visited-guarded goal search over the undirected shadow \\
@@ -460,10 +463,12 @@ SKÆRMDUMP 2 (indsat her): commit-oversigt med datoer ---
 \section*{Bilag E. Verifikation: kørsel og tests}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\texttt{poetry run pytest} giver 21 tests, som dækker verifikationsplanens \S 8:
+\texttt{poetry run pytest} giver 23 tests, som dækker verifikationsplanens \S 8:
 klusterkort sammenlignes med en uafhængig BFS-reference, identitet (3)
 $k = n - s$ holdes på tilfældige populationer, dybe kæder klarer de iterative
-traverseringer, cyklusser afvises, og skaleringen er nær-lineær.
+traverseringer, cyklusser afvises, skaleringen er nær-lineær, og
+slægtskabsspørgsmålet fra \S 7.10 er dækket (\texttt{find\_common\_ancestor},
+\texttt{is\_related}).
 
 Udskrift fra \texttt{poetry run python src} (uddrag):
 
@@ -478,6 +483,9 @@ ancestors of kid: 4 - ada, dan, kid, mia  (pedigree collapse reduces
 the binary-lattice bound)
 descendants of ada: 3 - dan, kid, mia
 early-exit search found: ada (O7)
+common ancestors of mia and dan: ada
+is_related(mia, dan) = True
+is_related(kid, solo) = False
 
 layered layout (ranks and crossing counts):
   C1: ranks [0, 1, 2], crossings = 1
@@ -487,5 +495,61 @@ layered layout (ranks and crossing counts):
 Bem{\ae}rk identiteten i praksis: $n = 5$, $m = 4$ forældreferencer,
 $s = 3$ vellykkede sammenl{\aa}gninger, $k = 2$ klynger --- og
 $k = n - s = 5 - 3 = 2$.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section*{Bilag F. Kravdokumentation: produktet vs. kravene}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Kravene stammer fra Projekt.docx (produkt, visualisering, MVC) og afsnit 7.10 i
+bogen (\emph{Projekt: Fælles aner}, s. 162--163). Koden er bevidst skrevet på
+engelsk; attributterne \texttt{name}, \texttt{mom}, \texttt{dad} svarer til
+diagrammets \texttt{navn}, \texttt{mor}, \texttt{far}.
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{6,4cm}p{8,4cm}@{}}
+\toprule
+\textbf{Krav} & \textbf{Opfyldt af} \\
+\midrule
+Program der kan undersøge slægtskab (``Har to personer mindst en fælles ane?'')
+  & \texttt{search.is\_related()} og \texttt{find\_common\_ancestor()} (B8) \\
+Person med valgfri mor og far
+  & \texttt{Person(name, mom, dad)} (B1) \\
+Klassediagrammets attributter
+  & \texttt{name}/\texttt{mom}/\texttt{dad} (engelsk) + \texttt{pronouns} \\
+Opret personer og forbind dem
+  & \texttt{build\_family\_graph} (B2) \\
+\texttt{\_\_str\_\_} a la ``Navn Nikolaj, mors navn er Anne...''
+  & \texttt{Person.\_\_str\_\_} (B1) \\
+Test af \texttt{\_\_str\_\_}
+  & \texttt{test\_person\_dunder\_str} \\
+Stor familie, mindst tre generationer
+  & figur \texttt{stor\_familie.pdf} (14 personer, 4 generationer) \\
+Tegn et stamtræ
+  & \texttt{view.render\_cluster} (B7) \\
+\texttt{find\_common\_ancestor()} returnerer liste over fælles aner
+  & \texttt{search.find\_common\_ancestor()} (B8) \\
+\texttt{is\_related()} returnerer boolean
+  & \texttt{search.is\_related()} (B8) \\
+Visualisering med \texttt{matplotlib.pyplot}
+  & \texttt{src/view.py} (B7) \\
+MVC-arkitektur
+  & bilag A: model / controller / view \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\bigskip
+\noindent\textbf{Svar på spørgsmålet ``Hvilken type relation er der tale om?''}
+Forbindelsen mellem \texttt{Person}-objekterne er en \emph{assosiation} ---
+mere præcist \emph{aggregering} (``har en''-relation): et objekt har referencer
+til andre \texttt{Person}-objekter som mor/far, objekterne eksisterer uafhængigt
+af hinanden, relationen er valgfri (\texttt{None}), og den er \emph{refleksiv}
+--- samme klasse i begge ender. Det er ikke nedarvning.
+
+\bigskip
+\noindent\textbf{Definition-valg.} Spørgsmålet er om \emph{mindst} en fælles
+ane. $\mathrm{Anc}(v)$ indeholder per \S 2.5 også personen selv, så en forælder
+og et barn tælles som beslægtede --- ellers ville \texttt{is\_related(ada, kid)}
+give \texttt{False}, uagtet at ada er kids bedstemor.
 
 \end{document}

@@ -216,6 +216,31 @@ def test_ancestors_iterative_flags_cycles(person_cls, search_module):
         search_module.ancestors_iterative(a)
 
 
+def test_goal_search_over_undirected_shadow_has_no_false_cycles(person_cls, search_module):
+    ada = person_cls("ada")
+    mia = person_cls("mia", mom=ada)
+    dan = person_cls("dan", dad=ada)
+    kid = person_cls("kid", mom=mia, dad=dan)
+
+    def neighbours(p):
+        return [q for q in (p.mom, p.dad) if q is not None] + [
+            c for c in (mia, dan, kid) if c.mom is p or c.dad is p
+        ]
+
+    # the diamond in Ē doubles every tree edge back to a GRAY parent; a goal search
+    # there must use the visited guard (Lemma 3.1), not the 3-colour cycle guard
+    assert (
+        search_module.find_with_early_exit(
+            kid, lambda p: p.name == "solo", neighbours=neighbours
+        )
+        is None
+    )
+    found = search_module.find_with_early_exit(
+        kid, lambda p: p.name == "ada", neighbours=neighbours
+    )
+    assert found is not None and found.name == "ada"
+
+
 # ---------------------------------------------------------------- 4. cycles
 
 

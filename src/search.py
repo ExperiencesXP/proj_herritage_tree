@@ -127,6 +127,10 @@ def explore_safe(
     ``ValueError``) *before* the traversal can diverge — invariant I2 is enforced, not
     assumed (Theorem 3.4).
 
+    Only sound on the **directed** parental neighbourhood (the default): in the
+    undirected shadow Ē every tree edge doubles back to a GRAY parent and would be
+    misreported as a cycle.  Use :func:`explore_iterative` (visited guard) on Ē.
+
     ``on_node`` is an optional goal predicate: when it returns True the search raises
     :class:`StopSearch` for early exit (O7) — worst case unchanged, expected cost d·b̄
     instead of n when the goal is near.
@@ -225,18 +229,26 @@ def find_with_early_exit(
     goal: Callable[[Any], bool],
     neighbours: NeighboursFn | None = None,
 ) -> Any | None:
-    """Goal-directed 3-colour search returning the first match (O7/O11 reference form)."""
-    colour: dict[Any, int] = {}
-    found: list[Any] = []
+    """Goal-directed search returning the first match, with early exit (O7).
 
-    def goal_and_stop(candidate: Any) -> bool:
-        if goal(candidate):
-            found.append(candidate)
-            return True
-        return False
-
-    try:
-        explore_safe(node, colour, neighbours, on_node=goal_and_stop)
-    except StopSearch:
-        return found[0] if found else None
+    The visited-guarded iterative form (O5) is used on purpose instead of the 3-colour
+    guard of :func:`explore_safe`: the goal search may run over the undirected shadow Ē
+    (cluster membership), where the 3-colour "back edge" test would report a cycle for
+    every ordinary parent-child pair.  The visited guard is the correct fixed-point
+    stabilisation on Ē (Lemma 3.1); I2 diagnostics belong to :func:`draw.validate_acyclic`
+    on the directed parental graph.  Worst case unchanged (Θ(n + m)); when the goal sits
+    near the seed the unexplored branches are pruned, expected cost ≈ d·b̄ (O7).
+    """
+    if node is None:
+        return None
+    seen: set[Any] = set()
+    stack = [node]
+    while stack:
+        current = stack.pop()
+        if current is None or current in seen:
+            continue
+        if goal(current):
+            return current
+        seen.add(current)
+        stack.extend(w for w in _neighbours(current, neighbours) if w not in seen)
     return None

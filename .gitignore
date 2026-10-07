@@ -16,3 +16,6 @@ synopsis/synopsis.out
 synopsis/synopsis.fdb_latexmk
 synopsis/synopsis.fls
 synopsis/pages.txt
+.pytest_cache
+.mathsensesynopsis/synopsis.toc
+synopsis/pages.txt

@@ -4,7 +4,7 @@ from collections.abc import Callable, Iterable
 from pathlib import Path
 from typing import Any
 
-from model.cluster_map import (
+from models.cluster_map import (
     ClusterMap,
     build_cluster_map,
     build_cluster_map_dfs,
@@ -12,9 +12,15 @@ from model.cluster_map import (
     build_cluster_map_unionfind,
 )
 from draw import Layout, layout_cluster_map, to_dot, to_mermaid
-from model.graph_model import FamilyGraph, build_csr, build_family_graph, parent_edges, reach_csr
-from model.person import Person
-from model.search import (
+from models.graph_model import (
+    FamilyGraph,
+    build_csr,
+    build_family_graph,
+    parent_edges,
+    reach_csr,
+)
+from models.person import Person
+from models.search import (
     ancestors_iterative,
     descendants,
     explore_iterative,
@@ -77,7 +83,9 @@ class FamilyController:
             if ra is not rb:
                 parent[rb] = ra
                 s += 1
-        assert dfs_map.k == self.graph.n - s, f"identity (3) violated: {dfs_map.k} != n - {s}"
+        assert (
+            dfs_map.k == self.graph.n - s
+        ), f"identity (3) violated: {dfs_map.k} != n - {s}"
 
         biggest = max(dfs_map.clusters, key=len)
         members = frozenset(biggest.members)
@@ -85,7 +93,9 @@ class FamilyController:
         walked = explore_iterative(seed, neighbours=neighbours_of(self.graph))
         csr = build_csr(self.graph, members=sorted(members, key=lambda p: p.name))
         assert walked == members, "cluster != closure of the seed in G-bar"
-        assert set(reach_csr(csr, 0)) == members, "CSR traversal disagrees with the cluster"
+        assert (
+            set(reach_csr(csr, 0)) == members
+        ), "CSR traversal disagrees with the cluster"
 
         self.cluster_map = dfs_map
         return {"n": self.graph.n, "m": self.graph.m, "k": dfs_map.k, "s": s}

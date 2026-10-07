@@ -8,7 +8,7 @@ _SRC = Path(__file__).resolve().parent
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
-from model.person import Person
+from models.person import Person
 
 
 def build_demo_population() -> tuple[Person, ...]:
@@ -42,8 +42,8 @@ def spanning_forest_size(
 
 def main() -> int:
     from controller import FamilyController
-    from model.graph_model import parent_edges
-    from model.search import ancestors
+    from models.graph_model import parent_edges
+    from models.search import ancestors
 
     people = build_demo_population()
     app = FamilyController(people)
@@ -68,7 +68,9 @@ def main() -> int:
         + ", ".join(sorted(p.name for p in members))
     )
     closure = app.ancestors_of("kid")
-    assert closure == ancestors(kid), "iterative Anc disagrees with the reference recursion"
+    assert closure == ancestors(
+        kid
+    ), "iterative Anc disagrees with the reference recursion"
     print(
         f"ancestors of kid: {len(closure)} - "
         + ", ".join(sorted(p.name for p in closure))
@@ -106,6 +108,7 @@ def main() -> int:
     for path in written:
         print(f"  {path}")
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

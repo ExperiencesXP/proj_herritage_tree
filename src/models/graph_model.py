@@ -4,7 +4,7 @@ from array import array
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
-from model.person import Person
+from models.person import Person
 
 __all__ = [
     "FamilyGraph",

@@ -82,7 +82,9 @@ def random_population(person_cls, rng, target: int = 60):
     return people
 
 
-def test_cluster_matches_bfs_reference(person_cls, graph_model_module, cluster_map_module):
+def test_cluster_matches_bfs_reference(
+    person_cls, graph_model_module, cluster_map_module
+):
     for seed in (1729, 271828, 314159, 161803):
         rng = random.Random(seed)
         people = random_population(person_cls, rng, target=rng.randint(20, 90))
@@ -107,7 +109,10 @@ def test_cluster_count_identity_eq3(person_cls, graph_model_module, cluster_map_
         graph = graph_model_module.build_family_graph(people)
         n = len(people)
         edge_pairs = {
-            (p, q) for p in people for q in (p.mom, p.dad) if q is not None and q is not p
+            (p, q)
+            for p in people
+            for q in (p.mom, p.dad)
+            if q is not None and q is not p
         }
         uf_map = cluster_map_module.build_cluster_map_unionfind(graph)
 
@@ -193,7 +198,9 @@ def test_common_ancestors_and_is_related(person_cls, search_module):
     assert search_module.is_related(None, kid) is False
 
 
-def test_goal_search_over_undirected_shadow_has_no_false_cycles(person_cls, search_module):
+def test_goal_search_over_undirected_shadow_has_no_false_cycles(
+    person_cls, search_module
+):
     ada = person_cls("ada")
     mia = person_cls("mia", mom=ada)
     dan = person_cls("dan", dad=ada)
@@ -233,7 +240,9 @@ def test_longer_cycle_raises(person_cls, draw_module):
         draw_module.validate_acyclic(graph)
 
 
-def test_layout_rank_and_y_coordinate(person_cls, cluster_map_module, graph_model_module, draw_module):
+def test_layout_rank_and_y_coordinate(
+    person_cls, cluster_map_module, graph_model_module, draw_module
+):
     chain_tip = chain(person_cls, 6)
     graph = graph_model_module.build_family_graph([chain_tip], include_ancestors=True)
     cmap = cluster_map_module.build_cluster_map(graph)
@@ -248,7 +257,9 @@ def test_layout_rank_and_y_coordinate(person_cls, cluster_map_module, graph_mode
         assert layout.x[person] >= 0.0
 
 
-def test_mermaid_export_shape(person_cls, cluster_map_module, graph_model_module, draw_module):
+def test_mermaid_export_shape(
+    person_cls, cluster_map_module, graph_model_module, draw_module
+):
     kids = chain(person_cls, 4)
     graph = graph_model_module.build_family_graph([kids], include_ancestors=True)
     cmap = cluster_map_module.build_cluster_map(graph)
@@ -261,7 +272,9 @@ def test_mermaid_export_shape(person_cls, cluster_map_module, graph_model_module
     assert len(lines) == 4
 
 
-def test_pairs_map_exports_keep_parent_to_child_arrows(person_cls, cluster_map_module, draw_module):
+def test_pairs_map_exports_keep_parent_to_child_arrows(
+    person_cls, cluster_map_module, draw_module
+):
     a, b, c = person_cls("a"), person_cls("b"), person_cls("c")
     pmap = cluster_map_module.build_cluster_map_pairs([a, b, c], [(b, a), (c, b)])
     text = draw_module.to_mermaid(pmap.clusters[0])
@@ -290,12 +303,12 @@ def test_person_dunder_str_matches_book_style(person_cls):
 
 
 def test_default_name_follows_pronouns(person_cls):
-    from model.person import Pronouns
+    from models.person import Pronouns
 
     presets = Pronouns.PRESETS
     assert person_cls(pronouns=presets["male"]).name == "John Doe"
     assert person_cls(pronouns=presets["female"]).name == "Jane Doe"
-    assert person_cls(pronouns=presets["other"]).name == "Alex Doe"
+    assert person_cls(pronouns=presets["other"]).name == "An Other"
     assert person_cls(pronouns=presets["they"]).name == "Alex Doe"
     assert person_cls().name == "Alex Doe"
     assert person_cls(name="ada").name == "ada"

@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Callable, Iterable
 from typing import Any
 
-from model.graph_model import FamilyGraph
+from models.graph_model import FamilyGraph
 
 __all__ = [
     "explore",

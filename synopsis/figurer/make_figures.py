@@ -15,12 +15,12 @@ _HERE = Path(__file__).resolve()
 _SRC = _HERE.parents[2] / "src"
 sys.path.insert(0, str(_SRC))
 
-from model.person import Person
-import model.cluster_map as cluster_map_module
+from models.person import Person
+import models.cluster_map as cluster_map_module
 from controller import FamilyController
 import draw as draw_module
-import model.graph_model as graph_model_module
-import model.search as search_module
+import models.graph_model as graph_model_module
+import models.search as search_module
 from view import render_cluster
 
 OUT = _HERE.parent
@@ -66,8 +66,24 @@ def stor_familie() -> None:
     emma = Person("emma", mom=line, dad=anders)
     maja = Person("maja", mom=line, dad=anders)
 
-    app = FamilyController([henrik, mette, ole, else_, karen, lars, iben,
-                            sofie, kasper, pia, anders, line, emma, maja])
+    app = FamilyController(
+        [
+            henrik,
+            mette,
+            ole,
+            else_,
+            karen,
+            lars,
+            iben,
+            sofie,
+            kasper,
+            pia,
+            anders,
+            line,
+            emma,
+            maja,
+        ]
+    )
     app.build_map()
     (layout,) = app.layout(parallel=False)
     assert app.cluster_map is not None
@@ -80,10 +96,14 @@ def stor_familie() -> None:
     save(fig, "stor_familie")
 
     shared = app.find_common_ancestor("anders", "line")
-    print("  stor_familie: fælles aner for anders og line = "
-          + ", ".join(p.name for p in shared))
-    print(f"  is_related(anders, line) = {app.is_related('anders', 'line')},"
-          f" is_related(emma, pia) = {app.is_related('emma', 'pia')}")
+    print(
+        "  stor_familie: fælles aner for anders og line = "
+        + ", ".join(p.name for p in shared)
+    )
+    print(
+        f"  is_related(anders, line) = {app.is_related('anders', 'line')},"
+        f" is_related(emma, pia) = {app.is_related('emma', 'pia')}"
+    )
 
 
 def diamond_chain(depth: int) -> Person:

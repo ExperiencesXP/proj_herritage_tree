@@ -53,7 +53,8 @@ class Person:
     DEFAULT_NAMES: ClassVar[dict[str, str]] = {
         "male": "John Doe",
         "female": "Jane Doe",
-        "other": "Alex Doe",
+        "other": "An Other",
+        "they": "Alex Doe",
     }
 
     def __init__(
@@ -70,11 +71,11 @@ class Person:
 
     @classmethod
     def default_name(cls, pronouns: Pronouns | None) -> str:
-        presets = Pronouns.PRESETS
-        if pronouns == presets["male"]:
-            return cls.DEFAULT_NAMES["male"]
-        if pronouns == presets["female"]:
-            return cls.DEFAULT_NAMES["female"]
+        if pronouns is None:
+            return cls.DEFAULT_NAMES["they"]
+        for key, preset in Pronouns.PRESETS.items():
+            if pronouns is preset:
+                return cls.DEFAULT_NAMES.get(key, cls.DEFAULT_NAMES["other"])
         return cls.DEFAULT_NAMES["other"]
 
     def __str__(self) -> str:

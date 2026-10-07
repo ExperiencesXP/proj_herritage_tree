@@ -7,7 +7,7 @@ from typing import Any
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 
-from model.cluster_map import Cluster, ClusterMap
+from models.cluster_map import Cluster, ClusterMap
 from draw import Layout, layout_cluster_map
 
 __all__ = ["render_cluster", "render_cluster_map"]

@@ -12,7 +12,7 @@ if str(SRC) not in sys.path:
 
 @pytest.fixture()
 def person_cls():
-    from model import person
+    from models import person
 
     return person.Person
 
@@ -43,21 +43,21 @@ def family_graph(family, graph_model_module):
 
 @pytest.fixture(scope="session")
 def graph_model_module():
-    from model import graph_model
+    from models import graph_model
 
     return graph_model
 
 
 @pytest.fixture(scope="session")
 def search_module():
-    from model import search
+    from models import search
 
     return search
 
 
 @pytest.fixture(scope="session")
 def cluster_map_module():
-    from model import cluster_map
+    from models import cluster_map
 
     return cluster_map
 

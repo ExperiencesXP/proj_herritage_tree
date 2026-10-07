@@ -4,7 +4,7 @@ Family-tree project ("Fælles aner"): model a `Person` pedigree as a graph, part
 into clusters (connected components of the undirected parent shadow), search the clusters
 recursively, and draw one map per cluster.
 
-Design and analysis: [docs/cluster_map_and_recursive_search.md](docs/cluster_map_and_recursive_search.md).
+Design and analysis are described in the synopsis (`synopsis/synopsis.pdf`).
 
 ## Installing and running
 
@@ -30,19 +30,19 @@ the assignment's kinship question from section 7.10 via `is_related()` and
 poetry run pytest
 ```
 
-The suite pins the verification plan of the design doc (§8): cluster maps agree with an
-independent BFS reference, identity (3) `k = n − s` holds, deep chains survive the
+The suite pins the project's verification plan: cluster maps agree with an
+independent BFS reference, the cluster count equals persons minus merges, deep chains survive the
 iterative traversals, cycles are flagged, the scaling is near-linear, and the 7.10
 kinship queries (`find_common_ancestor`, `is_related`) return the expected answers.
 
 ## Architecture (MVC)
 
-The model layer lives in the `src/model/` package and is imported as `model.person`,
-`model.search`, … . The source is deliberately free of comments and docstrings; this
-README, `docs/` and the design document carry the documentation.
+The model layer lives in the `src/models/` package and is imported as `models.person`,
+`models.search`, … . The source is deliberately free of comments and docstrings; this
+README and the synopsis (`synopsis/`) carry the documentation.
 
 | Layer | Modules | Role |
 |---|---|---|
-| Model | `model/person.py`, `model/graph_model.py`, `model/cluster_map.py`, `model/search.py` (the `model` package, imported as `model.person` etc.) | data (`Person`, `FamilyGraph`) and algorithms (cluster map, recursive search) |
+| Model | `models/person.py`, `models/graph_model.py`, `models/cluster_map.py`, `models/search.py` (the `models` package) | data (`Person`, `FamilyGraph`) and algorithms (cluster map, recursive search) |
 | View | `draw.py`, `view.py` | layered Sugiyama layout, Mermaid/Graphviz fragments, matplotlib figures |
 | Controller | `controller.py`, `__main__.py` | `FamilyController` facade + entry point that drives the pipeline |

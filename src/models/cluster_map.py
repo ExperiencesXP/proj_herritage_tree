@@ -4,8 +4,8 @@ from collections.abc import Hashable, Iterable
 from dataclasses import dataclass
 from typing import Any
 
-from model.graph_model import FamilyGraph, undirected_edges
-from model.search import explore_iterative
+from models.graph_model import FamilyGraph, undirected_edges
+from models.search import explore_iterative
 
 
 @dataclass(frozen=True, slots=True)

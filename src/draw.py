@@ -7,9 +7,9 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from typing import Any
 
-from model.cluster_map import Cluster, ClusterMap
-from model.graph_model import FamilyGraph
-from model.search import CycleError, explore_safe
+from models.cluster_map import Cluster, ClusterMap
+from models.graph_model import FamilyGraph
+from models.search import CycleError, explore_safe
 
 __all__ = [
     "Layout",
@@ -63,9 +63,7 @@ def assign_ranks(cluster: Cluster, delta: int = 1) -> dict[Any, int]:
         parent = ready.popleft()
         processed += 1
         for child in children[parent]:
-            ranks[child] = max(
-                ranks[child], ranks[parent] + delta
-            )
+            ranks[child] = max(ranks[child], ranks[parent] + delta)
             indegree[child] -= 1
             if indegree[child] == 0:
                 ready.append(child)

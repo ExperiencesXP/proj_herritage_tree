@@ -86,6 +86,7 @@ def main() -> int:
     from graph_model import build_csr, build_family_graph, parent_edges, reach_csr
     from search import (
         ancestors,
+        ancestors_iterative,
         descendants,
         explore_iterative,
         find_with_early_exit,
@@ -133,7 +134,8 @@ def main() -> int:
     csr = build_csr(graph, members=sorted(members, key=lambda p: p.name))
     assert set(reach_csr(csr, 0)) == members, "CSR traversal disagrees with the cluster"
 
-    closure = ancestors(kid)  # memoised Anc (section 2.5)
+    closure = ancestors_iterative(kid)  # memoised Anc (section 2.5, production form O5)
+    assert closure == ancestors(kid), "iterative Anc disagrees with the reference recursion"
     print(
         f"ancestors of kid: {len(closure)} - "
         + ", ".join(sorted(p.name for p in closure))

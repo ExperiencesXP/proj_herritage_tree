@@ -72,22 +72,19 @@ class Person:
         self.pronouns = pronouns or Pronouns.from_preset("they")
 
     def __str__(self) -> str:
-        parent_line: list[str] = []
+        known: list[str] = []
         if self.mom:
-            parent_line.append(f"mother is {self.mom.name}")
+            known.append(f"mother is {self.mom.name}")
         if self.dad:
-            parent_line.append(f"father is {self.dad.name}")
-        if len(parent_line) == 1:
-            if self.mom:
-                parent_line.append("no known mother")
-            else:
-                parent_line.append("no known father")
+            known.append(f"father is {self.dad.name}")
 
-        if not parent_line:
-            parent_line.append(f"{self.pronouns.subject} has no known parents")
+        if not known:
+            return f"{self.name} has no known parents."
+        if len(known) == 1:
+            # exactly one parent known: name the *other* one as the unknown slot
+            known.append("no known father" if self.mom else "no known mother")
 
-        parents = " and ".join(parent_line)
-        return f"{self.name}'s {parents}."
+        return f"{self.name}'s " + " and ".join(known) + "."
 
     def pronoun(self, form: str) -> str:
         return self.pronouns.get(form)

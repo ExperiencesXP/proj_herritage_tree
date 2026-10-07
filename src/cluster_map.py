@@ -193,22 +193,26 @@ def build_cluster_map_pairs(
     Implements the §2.4 pseudocode directly.  Each successful merge increments the
     counter behind identity (3), so ``map.k == len(nodes) - s`` holds after construction
     — the §8.1 property test exercises exactly this.
+
+    ``pairs`` follow the ``(child, parent)`` orientation of ``E`` (§1.1).  Undirected
+    duplicates are merged, but the **first-seen orientation is kept**, so the per-cluster
+    ``edges`` still draw parent → child in :func:`draw.to_mermaid` / :func:`draw.to_dot`.
     """
     ordered = tuple(nodes)
     idx = {node: i for i, node in enumerate(ordered)}
     uf = UnionFind(len(ordered))
-    edge_set: set[tuple[Hashable, Hashable]] = set()
+    edge_first: dict[tuple[Hashable, Hashable], tuple[Hashable, Hashable]] = {}
     for u, v in pairs:
         try:
             a, b = idx[u], idx[v]
         except KeyError as err:
             raise ValueError(f"edge endpoint not in nodes: {err.args[0]!r}") from err
         uf.union(a, b)
-        edge_set.add((u, v) if a < b else (v, u))
+        edge_first.setdefault((u, v) if a < b else (v, u), (u, v))
     owner, buckets = _assign_ids(
         {node: uf.find(idx[node]) for node in ordered}, ordered
     )
-    return _assemble(owner, buckets, edge_set)
+    return _assemble(owner, buckets, edge_first.values())
 
 
 def build_cluster_map(graph: FamilyGraph) -> ClusterMap:

@@ -6,9 +6,11 @@ Three searches live here, each computing exactly what the analysis proves it com
   point** of the monotone operator Φ_v on (2^V, ⊆) (§2.1, Theorem 3.2).  The ``visited``
   guard is the fixed-point stabilisation: each node is expanded once, so
   T = Θ(n + m) = Θ(n) by equation (1) and S = Θ(n) (equation 2).
-* :func:`ancestors` / :func:`descendants` — mutual recursion over the ancestral query
+* :func:`ancestors` / :func:`ancestors_iterative` — the ancestral query
   (§2.5), **memoised**: without a cache the cost is Θ(2^{d/2}) for diamond chains or
-  Θ(φ^d) for Fibonacci pedigrees (§4.3); with the cache it is Θ(n + m).
+  Θ(φ^d) for Fibonacci pedigrees (§4.3); with the cache it is Θ(n + m).  Same
+  reference/production split as :func:`explore`: the recursion is the readable form,
+  the explicit-stack form is depth-safe (O5).
 * :func:`explore_safe` — the 3-colour (WHITE/GRAY/BLACK) cycle guard of §2.6, complete for
   the acyclicity invariant I2 (Theorem 3.4).
 
@@ -29,6 +31,7 @@ __all__ = [
     "explore_iterative",
     "explore_safe",
     "ancestors",
+    "ancestors_iterative",
     "descendants",
     "find_with_early_exit",
     "CycleError",
@@ -151,6 +154,10 @@ def ancestors(p: Any) -> frozenset[Any]:
     The per-seed cache is memoisation O2: each node is computed exactly once and reused,
     so a closure over a lattice-shaped pedigree costs Θ(n + m) instead of Θ(φ^d) for
     Fibonacci pedigrees or Θ(2^{d/2}) for diamond chains (§4.3).
+
+    Reference recursion (O5): the frame depth is still Θ(d), so a pure chain past
+    CPython's R = 1000 raises ``RecursionError`` — use :func:`ancestors_iterative`
+    on the production path, exactly like :func:`explore` vs :func:`explore_iterative`.
     """
     cache: dict[Any, frozenset[Any]] = {}
 
@@ -165,6 +172,45 @@ def ancestors(p: Any) -> frozenset[Any]:
         return cache[node]
 
     return closure(p)
+
+
+def ancestors_iterative(p: Any) -> frozenset[Any]:
+    """Production form of :func:`ancestors` (O5): same closure, explicit stack.
+
+    The recurrence of §2.5 is evaluated bottom-up (post-order) with the same per-seed
+    memo cache — each node is computed exactly once, Θ(n + m) by the potential argument
+    of §4.3 — but without nesting Θ(d) Python frames: a 2000-person chain overflows the
+    recursion limit in :func:`ancestors`, not here.  ``on_stack`` reuses the GRAY colour
+    of §2.6: a node re-entered while still expanding is a back edge, so a parental cycle
+    (violating I2) raises :class:`CycleError` instead of looping forever.
+    """
+    if p is None:
+        return frozenset()
+    cache: dict[Any, frozenset[Any]] = {}
+    on_stack: set[Any] = set()
+    stack: list[tuple[Any, bool]] = [(p, False)]
+    while stack:
+        node, expanded = stack.pop()
+        if node is None:
+            continue
+        if expanded:  # both parents cached: fold the recurrence for this node
+            out = {node}
+            for q in (node.mom, node.dad):
+                if q is not None:
+                    out |= cache[q]
+            cache[node] = frozenset(out)
+            on_stack.discard(node)
+            continue
+        if node in cache:
+            continue
+        if node in on_stack:  # GRAY re-entry = cycle (§2.6)
+            raise CycleError("cycle in parental record")
+        on_stack.add(node)
+        stack.append((node, True))
+        for q in (node.mom, node.dad):
+            if q is not None and q not in cache:
+                stack.append((q, False))
+    return cache[p]
 
 
 def descendants(graph: FamilyGraph, p: Any) -> frozenset[Any]:

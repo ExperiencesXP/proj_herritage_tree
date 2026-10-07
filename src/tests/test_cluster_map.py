@@ -196,6 +196,26 @@ def test_recursive_reference_raises_recursionerror(person_cls, search_module):
         search_module.explore(tip, set(), [], neighbours=lambda p: (p.mom,))
 
 
+def test_ancestors_iterative_matches_reference(person_cls, search_module):
+    tip = diamond_chain(person_cls, 8)
+    assert search_module.ancestors_iterative(tip) == search_module.ancestors(tip)
+    assert search_module.ancestors_iterative(None) == frozenset()
+
+
+def test_ancestors_iterative_survives_deep_chain(person_cls, search_module):
+    tip = chain(person_cls, 2000)  # the reference recursion overflows here (O5)
+    closure = search_module.ancestors_iterative(tip)
+    assert len(closure) == 2000
+
+
+def test_ancestors_iterative_flags_cycles(person_cls, search_module):
+    a, b = person_cls("a"), person_cls("b")
+    a.mom = b
+    b.mom = a
+    with pytest.raises(ValueError):  # CycleError subclasses ValueError (§2.6)
+        search_module.ancestors_iterative(a)
+
+
 # ---------------------------------------------------------------- 4. cycles
 
 
@@ -246,6 +266,28 @@ def test_mermaid_export_shape(person_cls, cluster_map_module, graph_model_module
     assert "-->" in text
     lines = [line for line in text.splitlines() if "[" in line]
     assert len(lines) == 4  # four persons rendered as nodes
+
+
+def test_pairs_map_exports_keep_parent_to_child_arrows(person_cls, cluster_map_module, draw_module):
+    a, b, c = person_cls("a"), person_cls("b"), person_cls("c")
+    # (child, parent) pairs per §1.1: b is a's child, c is b's child
+    pmap = cluster_map_module.build_cluster_map_pairs([a, b, c], [(b, a), (c, b)])
+    text = draw_module.to_mermaid(pmap.clusters[0])
+    # nodes are labelled n0 = a, n1 = b, n2 = c (sorted by name); arrows stay parent -> child
+    assert '    n0["a"]' in text
+    assert "    n0 --> n1" in text  # a -> b
+    assert "    n1 --> n2" in text  # b -> c
+
+
+def test_str_names_the_unknown_parent_slot(person_cls):
+    ada = person_cls("ada")
+    assert str(ada) == "ada has no known parents."
+    assert str(person_cls("mia", mom=ada)) == "mia's mother is ada and no known father."
+    assert str(person_cls("dan", dad=ada)) == "dan's father is ada and no known mother."
+    assert (
+        str(person_cls("kid", mom=person_cls("mia"), dad=person_cls("dan")))
+        == "kid's mother is mia and father is dan."
+    )
 
 
 # ---------------------------------------------------------------- 6. scaling

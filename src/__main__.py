@@ -127,6 +127,12 @@ def main() -> int:
     assert goal is not None and goal.name == "ada", "early-exit search failed"
     print(f"early-exit search found: {goal.name} (O7)")
 
+    # --- project requirement 7.10: har to personer mindst en fælles ane? --------
+    shared = app.find_common_ancestor("mia", "dan")
+    print("common ancestors of mia and dan: " + ", ".join(p.name for p in shared))
+    print(f"is_related(mia, dan) = {app.is_related('mia', 'dan')}")
+    print(f"is_related(kid, solo) = {app.is_related('kid', 'solo')}")
+
     # --- section 6: layered drawing + source-free exports ----------------------
     layouts = app.layout()  # O9/O12
     print("\nlayered layout (ranks and crossing counts):")

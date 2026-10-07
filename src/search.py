@@ -32,6 +32,8 @@ __all__ = [
     "explore_safe",
     "ancestors",
     "ancestors_iterative",
+    "find_common_ancestor",
+    "is_related",
     "descendants",
     "find_with_early_exit",
     "CycleError",
@@ -222,6 +224,28 @@ def descendants(graph: FamilyGraph, p: Any) -> frozenset[Any]:
     if p is None:
         return frozenset()
     return frozenset(explore_iterative(p, neighbours=graph.children)) - {p}
+
+
+def find_common_ancestor(a: Any, b: Any) -> list[Any]:
+    """Every common ancestor of ``a`` and ``b`` as a list (project requirement 7.10).
+
+    Returns all persons that are ancestors of *both* — an empty list when there is
+    none.  The closure of §2.5 includes the person itself, which is exactly what the
+    question "har to personer mindst en fælles ane?" needs: a parent and a child count
+    as related because the parent is an ancestor of both.  Two memoised closures
+    (Θ(n + m) together) plus the set intersection.
+    """
+    if a is None or b is None:
+        return []
+    shared = ancestors_iterative(a) & ancestors_iterative(b)
+    return sorted(shared, key=lambda p: getattr(p, "name", str(p)))
+
+
+def is_related(a: Any, b: Any) -> bool:
+    """``True`` iff ``a`` and ``b`` share at least one common ancestor (7.10)."""
+    if a is None or b is None:
+        return False
+    return not ancestors_iterative(a).isdisjoint(ancestors_iterative(b))
 
 
 def find_with_early_exit(

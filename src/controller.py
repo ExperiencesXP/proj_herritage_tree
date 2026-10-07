@@ -35,7 +35,9 @@ from search import (
     ancestors_iterative,
     descendants,
     explore_iterative,
+    find_common_ancestor as _common_ancestors,
     find_with_early_exit,
+    is_related as _is_related,
     neighbours_of,
 )
 from view import render_cluster_map
@@ -139,6 +141,14 @@ class FamilyController:
         return find_with_early_exit(
             self.person(name), goal, neighbours=neighbours_of(self.graph)
         )
+
+    def find_common_ancestor(self, name1: str, name2: str) -> list[Person]:
+        """Alle fælles aner for to personer — besvarer projekt 7.10's spørgsmål."""
+        return _common_ancestors(self.person(name1), self.person(name2))
+
+    def is_related(self, name1: str, name2: str) -> bool:
+        """``True`` hvis de to personer har mindst én fælles ane (projekt 7.10)."""
+        return _is_related(self.person(name1), self.person(name2))
 
     def layout(self, *, parallel: bool = True) -> tuple[Layout, ...]:
         """Layered Sugiyama layout of every cluster (§6; O9/O12)."""

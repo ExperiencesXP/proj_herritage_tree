@@ -344,6 +344,37 @@ fra forælder til barn --- samme orientering som Mermaid- og Graphviz-uddragene.
 \end{lstlisting}
 
 % ═════════════════════════════════════════════════════════════════════════════
+\subsection*{B8. Fælles aner og slægtskab (projekt 7.10)}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Opgavens kerne i afsnit 7.10 er at besvare spørgsmålet \emph{``Har to personer
+mindst en fælles ane?''}. Svaret er skæringspunktet af de to forfædre-mængder
+$\mathrm{Anc}(a) \cap \mathrm{Anc}(b)$: en tom mængde betyder ikke-slægtskab.
+Fordi $\mathrm{Anc}(v)$ per \S 2.5 også indeholder personen selv, tæller en
+forælder og et barn som beslægtede --- forælderen er en fælles ``ane'' for begge,
+hvilket er den semantik, spørgsmålet forudsætter.
+
+\begin{lstlisting}[language=Python]
+def find_common_ancestor(a: Any, b: Any) -> list[Any]:
+    """Every common ancestor of a and b as a list (project requirement 7.10)."""
+    if a is None or b is None:
+        return []
+    shared = ancestors_iterative(a) & ancestors_iterative(b)
+    return sorted(shared, key=lambda p: getattr(p, "name", str(p)))
+
+
+def is_related(a: Any, b: Any) -> bool:
+    """True iff a and b share at least one common ancestor (7.10)."""
+    if a is None or b is None:
+        return False
+    return not ancestors_iterative(a).isdisjoint(ancestors_iterative(b))
+\end{lstlisting}
+
+Begge funktioner er memoiserede (to $\Theta(n + m)$-opslag plus mængde-
+operationen) og eksponeres gennem controlleren som
+\texttt{find\_common\_ancestor()} og \texttt{is\_related()}.
+
+% ═════════════════════════════════════════════════════════════════════════════
 \section*{Bilag C. Visualisering af træet}
 % ═════════════════════════════════════════════════════════════════════════════
 
@@ -351,9 +382,20 @@ fra forælder til barn --- samme orientering som Mermaid- og Graphviz-uddragene.
 \centering
 \includegraphics[width=0.95\textwidth]{figurer/familie_demo.pdf}
 \caption{Demo-familien fra design-dokumentet \S 1.3 tegnet af programmets eget
-view-modul. To klynger: sammenbrudsfamilien til venstre (ada er både mias og dans
-far, hvilket er pedigree-collapse, invariant \textbf{I3}) og den isolerede person
-\texttt{solo} til højre. Søgeudgangspunktet \texttt{kid} er fremhævet.}
+view-modul. To klynger: sammenbrudsfamilien til venstre (ada er forælder til både
+mia og dan, hvilket er pedigree-collapse, invariant \textbf{I3}) og den isolerede
+person \texttt{solo} til højre. Søgeudgangspunktet \texttt{kid} er fremhævet.}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{figurer/stor_familie.pdf}
+\caption{Den ``store familie'' fra opgave 7.10: 14 personer, fire generationer,
+én klynge. Anders' mor \texttt{sofie} og lines far \texttt{kasper} er søskende,
+så deres børn \texttt{emma} og \texttt{maja} har et sammenbrudt stamtræ på
+\texttt{ole}/\texttt{else} --- programmets eget slægtskabsspørgsmål finder
+præcis de to som fælles aner for \texttt{anders} og \texttt{line}.
+\texttt{emma} er fremhævet.}
 \end{figure}
 
 \begin{figure}[h]

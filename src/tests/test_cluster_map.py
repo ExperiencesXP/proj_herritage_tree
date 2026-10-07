@@ -216,6 +216,26 @@ def test_ancestors_iterative_flags_cycles(person_cls, search_module):
         search_module.ancestors_iterative(a)
 
 
+def test_common_ancestors_and_is_related(person_cls, search_module):
+    ada = person_cls("ada")
+    mia = person_cls("mia", mom=ada)
+    dan = person_cls("dan", dad=ada)
+    kid = person_cls("kid", mom=mia, dad=dan)
+    solo = person_cls("solo")
+
+    # project requirement 7.10: fælles aner + slægtskab
+    assert [p.name for p in search_module.find_common_ancestor(mia, dan)] == ["ada"]
+    assert search_module.is_related(mia, dan) is True
+    assert search_module.find_common_ancestor(kid, solo) == []
+    assert search_module.is_related(kid, solo) is False
+    # the §2.5 closure includes the person itself, so ancestor/descendant count as
+    # related (the parent is an ancestor of both)
+    assert search_module.is_related(ada, kid) is True
+    assert [p.name for p in search_module.find_common_ancestor(ada, kid)] == ["ada"]
+    assert search_module.find_common_ancestor(None, kid) == []
+    assert search_module.is_related(None, kid) is False
+
+
 def test_goal_search_over_undirected_shadow_has_no_false_cycles(person_cls, search_module):
     ada = person_cls("ada")
     mia = person_cls("mia", mom=ada)

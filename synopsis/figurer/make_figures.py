@@ -33,6 +33,7 @@ sys.path.insert(0, str(_SRC))
 
 from person import Person  # noqa: E402
 import cluster_map as cluster_map_module  # noqa: E402
+from controller import FamilyController  # noqa: E402
 import draw as draw_module  # noqa: E402
 import graph_model as graph_model_module  # noqa: E402
 import search as search_module  # noqa: E402
@@ -67,6 +68,47 @@ def familie_demo() -> None:
     fig.suptitle("Demo-familien fra design-dokumentet §1.3 (to klynger)", fontsize=11)
     fig.tight_layout()
     save(fig, "familie_demo")
+
+
+def stor_familie() -> None:
+    """The 'stor familie med mindst tre generationer' of project requirement 7.10.
+
+    Four generations, 13 persons, one cluster.  Anders' mother sofie and line's
+    father kasper are siblings (children of ole/else), so their children emma and
+    maja have a pedigree collapse on ole/else — the programme's own kinship query
+    finds exactly that pair as the cousins' common ancestors.
+    """
+    henrik, mette = Person("henrik"), Person("mette")
+    ole, else_ = Person("ole"), Person("else")
+    karen = Person("karen")  # giftes ind i familien (giver pia generation 1)
+    lars = Person("lars", mom=mette, dad=henrik)
+    iben = Person("iben", mom=mette, dad=henrik)
+    sofie = Person("sofie", mom=else_, dad=ole)
+    kasper = Person("kasper", mom=else_, dad=ole)
+    pia = Person("pia", mom=karen)
+    anders = Person("anders", mom=sofie, dad=lars)
+    line = Person("line", mom=pia, dad=kasper)
+    emma = Person("emma", mom=line, dad=anders)
+    maja = Person("maja", mom=line, dad=anders)
+
+    app = FamilyController([henrik, mette, ole, else_, karen, lars, iben,
+                            sofie, kasper, pia, anders, line, emma, maja])
+    app.build_map()
+    (layout,) = app.layout(parallel=False)
+    assert app.cluster_map is not None
+    cluster = app.cluster_map.clusters[0]
+
+    fig, ax = plt.subplots(figsize=(7.6, 5.4))
+    render_cluster(cluster, layout, ax=ax, highlight={emma})
+    ax.set_title("Stor familie (7.10): fire generationer, én klynge — emma markeret")
+    fig.tight_layout()
+    save(fig, "stor_familie")
+
+    shared = app.find_common_ancestor("anders", "line")
+    print("  stor_familie: fælles aner for anders og line = "
+          + ", ".join(p.name for p in shared))
+    print(f"  is_related(anders, line) = {app.is_related('anders', 'line')},"
+          f" is_related(emma, pia) = {app.is_related('emma', 'pia')}")
 
 
 def diamond_chain(depth: int) -> Person:
@@ -157,6 +199,7 @@ def scaling() -> None:
 
 if __name__ == "__main__":
     familie_demo()
+    stor_familie()
     pedigree_collapse()
     scaling()
     print("figures written to", OUT)

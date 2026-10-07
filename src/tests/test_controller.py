@@ -48,6 +48,13 @@ def test_controller_render_writes_png_per_cluster(app, tmp_path):
         assert path.exists() and path.stat().st_size > 0
 
 
+def test_controller_answers_kinship_question(app):
+    # project requirement 7.10: "Har to personer mindst en fælles ane?"
+    assert [p.name for p in app.find_common_ancestor("mia", "dan")] == ["ada"]
+    assert app.is_related("mia", "dan") is True
+    assert app.is_related("kid", "solo") is False
+
+
 def test_export_orientation_via_controller(app):
     text = app.mermaid_of("kid")
     assert text.startswith("flowchart TB")

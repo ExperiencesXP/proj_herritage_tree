@@ -2,7 +2,12 @@
 
 Running a directory (or ``python -m src``) makes Python execute ``__main__.py`` inside it, which
 drives the whole pipeline of docs/cluster_map_and_recursive_search.md
-(index -> map -> search -> draw -> export).
+(index -> map -> search -> draw -> export -> render).
+
+MVC (Projekt.docx): this module is the program's controller *entry* — it builds the demo
+population (data) and drives :class:`controller.FamilyController` (Controller, which owns
+the Model); finished values are handed to the Views (:mod:`draw` text exports,
+:mod:`view` matplotlib figures).
 
 The ``sys.path`` bootstrap below keeps flat imports (``from person import Person``,
 ``from cluster_map import ...``) resolvable in every supported launch mode:
@@ -71,87 +76,59 @@ def main() -> int:
     1. index the population into a ``FamilyGraph`` (section 1.2),
     2. map the clusters by DFS, Union-Find and the pairs form (sections 2.3-2.4),
     3. search - membership, memoised ancestor closure, descendants, goal exit,
-    4. draw each cluster with the layered passes (section 6) and export Mermaid
-       ``flowchart TB`` and Graphviz fragments.
+    4. draw each cluster with the layered passes (section 6), export Mermaid
+       ``flowchart TB`` and Graphviz fragments, and render the matplotlib figures
+       required by Projekt.docx (``out/cluster_<id>.png``).
 
-    The three map implementations must agree and identity (3) must hold, so running
-    this entry point doubles as a smoke test of the document's verification plan.
+    The three map implementations must agree, identity (3) must hold against two
+    independent forest counts, and the CSR scan must match the pointer walk, so
+    running this entry point doubles as a smoke test of the document's
+    verification plan.
     """
-    from cluster_map import (
-        build_cluster_map_dfs,
-        build_cluster_map_pairs,
-        build_cluster_map_unionfind,
-    )
-    from draw import layout_cluster_map, to_dot, to_mermaid
-    from graph_model import build_csr, build_family_graph, parent_edges, reach_csr
-    from search import (
-        ancestors,
-        ancestors_iterative,
-        descendants,
-        explore_iterative,
-        find_with_early_exit,
-        neighbours_of,
-    )
+    from controller import FamilyController
+    from graph_model import parent_edges
+    from search import ancestors
 
     people = build_demo_population()
-    graph = build_family_graph(people, include_ancestors=True)  # section 1.2
-    pairs = list(parent_edges(graph))
-    neighbours = neighbours_of(graph)  # undirected shadow, orientation-insensitive
+    app = FamilyController(people)  # section 1.2 indexing happens here
 
     print("Heritage-tree cluster map (docs/cluster_map_and_recursive_search.md)")
-    print(f"population  n = {graph.n}, parent edges m = {graph.m}  (I1: m <= 2n)")
-
-    # --- sections 2.3-2.4: three map implementations must coincide -------------
-    cmap = build_cluster_map_dfs(graph)
-    uf_map = build_cluster_map_unionfind(graph)
-    pairs_map = build_cluster_map_pairs(graph.persons, pairs)
-    assert cmap.k == uf_map.k == pairs_map.k, "map implementations disagree on k"
-    for person in people:
-        assert (
-            cmap.members_of(person)
-            == uf_map.members_of(person)
-            == pairs_map.members_of(person)
-        ), f"map implementations disagree on the cluster of {person.name}"
-
-    # --- identity (3), equation of Theorem 3.3: k = n - s -----------------------
+    facts = app.verify_consistency()  # sections 2.3-2.4 + identity (3) + CSR (O6)
+    cmap = app.cluster_map
+    assert cmap is not None  # set by verify_consistency
+    pairs = list(parent_edges(app.graph))
     s = spanning_forest_size(pairs, people)
-    assert cmap.k == graph.n - s, f"identity (3) violated: {cmap.k} != {graph.n} - {s}"
-    print(f"clusters    k = {cmap.k}  (identity 3: k = n - s with s = {s})")
+    assert s == facts["s"], "independent forest counts disagree"
+    print(f"population  n = {facts['n']}, parent edges m = {facts['m']}  (I1: m <= 2n)")
+    print(f"clusters    k = {facts['k']}  (identity 3: k = n - s with s = {s})")
     for cluster in sorted(cmap.clusters, key=lambda c: (len(c.members), c.id)):
         names = ", ".join(sorted(p.name for p in cluster.members))
         print(f"  C{cluster.id}: {len(cluster)} persons - {names}")
 
     # --- searches (sections 2.2 / 2.5 / O7) ------------------------------------
-    kid = next(p for p in people if p.name == "kid")
-    members = explore_iterative(kid, neighbours=neighbours)  # production path (O5)
-    assert members == set(cmap.members_of(kid)), "cluster != closure of Phi_kid"
+    kid = app.person("kid")
+    members = app.cluster_members("kid")  # production path (O5)
     print(
         "cluster of kid (explore_iterative over G-bar): "
         + ", ".join(sorted(p.name for p in members))
     )
-
-    # CSR cross-check (O6): array scans reach the same vertices as the pointer walk
-    csr = build_csr(graph, members=sorted(members, key=lambda p: p.name))
-    assert set(reach_csr(csr, 0)) == members, "CSR traversal disagrees with the cluster"
-
-    closure = ancestors_iterative(kid)  # memoised Anc (section 2.5, production form O5)
+    closure = app.ancestors_of("kid")  # memoised Anc (section 2.5, production form O5)
     assert closure == ancestors(kid), "iterative Anc disagrees with the reference recursion"
     print(
         f"ancestors of kid: {len(closure)} - "
         + ", ".join(sorted(p.name for p in closure))
         + "  (pedigree collapse reduces the binary-lattice bound)"
     )
-    down = descendants(graph, next(p for p in people if p.name == "ada"))
+    down = app.descendants_of("ada")
     print(
         f"descendants of ada: {len(down)} - " + ", ".join(sorted(p.name for p in down))
     )
-
-    goal = find_with_early_exit(kid, lambda p: p.name == "ada", neighbours=neighbours)
+    goal = app.find_person("kid", lambda p: p.name == "ada")
     assert goal is not None and goal.name == "ada", "early-exit search failed"
     print(f"early-exit search found: {goal.name} (O7)")
 
     # --- section 6: layered drawing + source-free exports ----------------------
-    layouts = layout_cluster_map(cmap, parallel=True)  # O9/O12
+    layouts = app.layout()  # O9/O12
     print("\nlayered layout (ranks and crossing counts):")
     for layout in layouts:
         ranks = sorted(set(layout.ranks.values()))
@@ -160,13 +137,16 @@ def main() -> int:
             assert layout.y[person] == rank * layout.delta, "coordinate pass (3) broken"
             assert layout.x[person] >= 0.0
 
-    showcase = max(cmap.clusters, key=len)  # the richest cluster as readable source
     print("\nMermaid fragment (flowchart TB, parent -> child):")
-    print(to_mermaid(showcase))
+    print(app.mermaid_of("kid"))  # the richest cluster as readable source
     print("\nGraphviz fragment (rankdir=TB):")
-    print(to_dot(showcase))
-    return 0
+    print(app.dot_of("kid"))
 
+    written = app.render(out_dir="out", highlight={kid})
+    print("\nmatplotlib figures written:")
+    for path in written:
+        print(f"  {path}")
+    return 0
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -2,3 +2,6 @@
 *.pyc
 __pycache__
 out/
+synopsis/bilag.aux
+synopsis/bilag.log
+synopsis/bilag.out

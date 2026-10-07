@@ -87,7 +87,8 @@ def render_cluster(
             bbox=HIGHLIGHT_STYLE if person in hot else NODE_STYLE,
         )
 
-    ax.set_title(title or f"Cluster {cluster.id} ({len(cluster)} persons)", fontsize=10)
+    unit = "person" if len(cluster) == 1 else "persons"
+    ax.set_title(title or f"Cluster {cluster.id} ({len(cluster)} {unit})", fontsize=10)
     ax.set_xlabel("position within generation layer (barycentre order, §6)")
     ax.set_ylabel("generation rank (rank 0 = no known parents)")
     # text artists do not feed autoscale, so the extents are set explicitly:

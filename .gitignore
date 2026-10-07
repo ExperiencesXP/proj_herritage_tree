@@ -5,3 +5,8 @@ out/
 synopsis/bilag.aux
 synopsis/bilag.log
 synopsis/bilag.out
+.mathsense/
+synopsis/bilag.fdb_latexmk
+synopsis/bilag.fls
+synopsis/.hermes-tmp*
+synopsis/*.synctex.gz

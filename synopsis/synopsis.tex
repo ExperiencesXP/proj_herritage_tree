@@ -1,5 +1,5 @@
-% Bilag til synopsen "Fælles aner" — kodeeksempler, figurer og udviklingsproces.
-% Kompileres med: pdflatex bilag.tex   (MiKTeX, dansk tegnsæt via inputenc/T1)
+% Synopsis "Fælles aner" — forblad, synopsis og bilag i ét dokument.
+% Kompileres med: pdflatex synopsis.tex   (MiKTeX, dansk tegnsæt via inputenc/T1)
 % Kodeuddragene er hentet fra src/ på dev-branchen (okt. 2026); koden er uden
 % kommentarer og docstrings, så forklaringerne står i teksten. Figurene
 % genereres af synopsis/figurer/make_figures.py.
@@ -36,12 +36,200 @@
              {Ē}{{$\bar{E}$}}1 {⁻}{{$^-$}}1 {̃}{{\~{}}}1
 }
 
-\title{Bilag til synopse --- \textit{Fælles aner}}
+\title{Synopsis --- \textit{Fælles aner}}
 \author{[projektdeltagere]}
 \date{}
+\emergencystretch=2em
 
 \begin{document}
-\maketitle
+
+% ─────────────────────────────────────────────────────────────────────────────
+% FORBLAD
+% ─────────────────────────────────────────────────────────────────────────────
+\thispagestyle{empty}
+\begin{center}
+{\LARGE\bfseries Fælles aner}\\[1em]
+{\large Programmeringsprojekt --- synopsis}\\[2.5em]
+\begin{tabular}{ll}
+Projektdeltagere: & \textit{(navne indsættes her)} \\
+Klasse: & 3.O \\
+Dato: & \textit{(afleveringsdato indsættes her)} \\
+\end{tabular}
+\end{center}
+
+\vspace{3em}
+\noindent Synopsis til projektet \emph{Fælles aner} (afsnit 7.10). Det fulde
+program ligger i repoet
+\url{https://github.com/ExperiencesXP/proj_herritage_tree} på branchen
+\texttt{dev}. Bilagene efter synopsen dokumenterer koden, figurene,
+udviklingsprocessen og kravopfyldelsen.
+
+\newpage
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{1. Projektbeskrivelse}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Programmet \emph{Fælles aner} undersøger slægtskab i en familie og besvarer
+spørgsmålet fra afsnit 7.10: \emph{har to personer mindst en fælles ane?}
+Familien modelleres som en graf, hvor hver person er en knude, og hver
+forældreference (\texttt{mom}/\texttt{dad}) er en rettet kant fra forælder til
+barn. Da en person højst har to forældre, er antallet af kanter $m \le 2n$
+(invariant \textbf{I1}).
+
+To idéer bærer projektet. For det første opdeles befolkningen i \emph{klynger}:
+de sammenhængende komponenter af den udretningsløse skygge $\bar{E}$, hvor
+kanternes retning ignoreres --- alle slægtninge i en familie hænger sammen,
+mens personer fra forskellige familier ikke gør. For det andet beregnes
+forfædre-mængden $\mathrm{Anc}(v)$ rekursivt som det mindste faste punkt for
+operatoren $\Phi_v(S)$ (\S 2.5 i designdokumentet), og to personer er
+beslægtede netop når deres to mængder skærer hinanden.
+
+Matematikken er dokumenteret i designdokumentet
+(\path{docs/cluster_map_and_recursive_search.md}, 528 linjer med beviser):
+klusterkortet kan bygges i $\Theta(n)$ tid og plads, fordi $m \le 2n$
+(\S 4.1); antallet af klynger $k$ og vellykkede sammenlægninger $s$ opfylder
+identitet (3) $k = n - s$ (teorem 3.3); og pedigree-collapse (invariant
+\textbf{I3}) viser, at antallet af forfædre er langt mindre end den naive
+binære grænse, når familier gentagne ganger blander slægtninge --- målt
+$|\mathrm{Anc}(v_k)| = 3k + 1$ for diamantkæden $D_k$ mod grænsen
+$2^{2k+1} - 1$ (figur i bilag C).
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{2. Funktionsbeskrivelse}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Brugeren installerer med \texttt{poetry install} og kører hele programmet med
+ét kommando, \texttt{poetry run python src}. Programmet indlæser en befolkning
+af personer, bygger klusterkortet og svarer på spørgsmål om familien:
+hvilket kluster en person hører til, hvem personens forfædre og efterkommere
+er, en målrettet søgning med tidligt stop, og --- som det centrale ---
+\texttt{find\_common\_ancestor()} og \texttt{is\_related()}, der besvarer
+spørgsmålet om fælles aner. Hvert kluster tegnes som et lagdelt stamtræ med
+\texttt{matplotlib.pyplot} og skrives til \texttt{out/}, og hvert kluster kan
+desuden eksporteres som Mermaid- eller Graphviz-kode.
+
+Eksempel på udskrift:
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+common ancestors of mia and dan: ada
+is_related(mia, dan) = True
+is_related(kid, solo) = False
+\end{lstlisting}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\textwidth]{figurer/familie_demo.pdf}
+\caption{Demo-familien tegnet af programmets eget view-modul: to klynger ---
+sammenbrudsfamilien til venstre og den isolerede person \texttt{solo} til højre.}
+\end{figure}
+
+Den indbyggede demo-familie har to klynger (figuren): en sammenbrudt familie,
+hvor \texttt{ada} er forælder til både \texttt{mia} og \texttt{dan}, og den
+isolererede person \texttt{solo}. Opgavens \emph{store familie} --- fjorten
+personer over fire generationer --- er tegnet færdigt i bilag C, hvor
+programmets eget spørgsmål finder de fælles aner for to kusiner.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{3. Dokumentation af programmet}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Overordnet følger programmet MVC-arkitekturen, som opgaven kræver (bilag A).
+\emph{Modellen} er pakken \texttt{src/model/} med data og algoritmer og kender
+hverken til visning eller styring; \emph{view}-laget (\texttt{draw.py},
+\texttt{view.py}) omsætter resultater til tekstuddrag og matplotlib-figurer;
+og \emph{controlleren} (\texttt{controller.py}, \texttt{\_\_main\_\_.py}) ejer
+tilstanden og kæder lagene sammen. Pipelinen er: indlæs befolkning $\to$ byg
+indeks $\to$ klusterkort $\to$ søgning $\to$ layout $\to$ eksport.
+
+Programmets kerne er klasserne \texttt{Person} og \texttt{Pronouns} (datamodel),
+\texttt{FamilyGraph} (grafen), \texttt{Cluster}, \texttt{ClusterMap} og
+\texttt{UnionFind} (klusterkortet), \texttt{Layout} (tegningen) og
+\texttt{FamilyController} (styringen). Tabellen viser, hvor hver del er
+forklaret i detaljer:
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{3,4cm}p{4,4cm}p{5,8cm}@{}}
+\toprule
+\textbf{Modul} & \textbf{Klasser} & \textbf{Nøglefunktioner} \\
+\midrule
+\texttt{model.person} & \texttt{Person}, \texttt{Pronouns} &
+  \texttt{\_\_str\_\_}, \texttt{pronoun}, \texttt{from\_preset} (B1) \\
+\texttt{model.graph\_model} & \texttt{FamilyGraph} &
+  \texttt{build\_family\_graph}, \texttt{parent\_edges} (B2) \\
+\texttt{model.search} & \texttt{CycleError} &
+  \texttt{explore}, \texttt{ancestors\_iterative},
+  \texttt{find\_common\_ancestor}, \texttt{is\_related} (B3, B5, B8) \\
+\texttt{model.cluster\_map} & \texttt{Cluster}, \texttt{UnionFind} &
+  \texttt{build\_cluster\_map} (B4) \\
+\texttt{draw} & \texttt{Layout} &
+  \texttt{layout\_cluster\_map}, \texttt{to\_mermaid}, \texttt{to\_dot} (B6) \\
+\texttt{view} & --- &
+  \texttt{render\_cluster}, \texttt{render\_cluster\_map} (B7) \\
+\texttt{controller} & \texttt{FamilyController} &
+  \texttt{build\_map}, \texttt{layout}, \texttt{is\_related}, \texttt{render} (A) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+OOP-principperne i koden er klasser og instanser, indkapsling (data og metoder
+hører sammen; controlleren gemmer sessionens tilstand), specialmetoden
+\texttt{\_\_str\_\_} der gør objekter læsbare ved udskrift, klassevariabler
+(\texttt{Pronouns.PRESETS}, \texttt{Person.DEFAULT\_NAMES}), immutabilitet
+hvor det giver mening (\texttt{Pronouns} er en frossen dataklasse) og
+\emph{composition} frem for nedarvning --- familien bygges af objekter, der
+refererer hinanden, ikke af en nedarvningshierarki. Standardnavnet på en
+person følger stedordene: \texttt{John Doe} ved han-ord, \texttt{Jane Doe} ved
+hun-ord og \texttt{Alex Doe} ellers.
+
+Kompleksiteten følger designdokumentets \S 4.4: klusterkortet koster
+$\Theta(n + m) = \Theta(n)$ tid og plads, den memoiserede forfædre-udregning
+$\Theta(n + m)$, Union-Find $O(m\,\alpha(m, n))$ (praktisk talt $O(m)$), og
+søgning $\Theta(n)$ i værste fald --- hurtigere med tidligt stop.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{4. Kravdokumentation}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Produktet lever op til kravene i Projekt.docx og afsnit 7.10; den punktvise
+dokumentation findes i bilag F. Kort sagt: programmet er skrevet i Python,
+visualiseringen bruger \texttt{matplotlib.pyplot} (view-laget), arkitekturen
+er MVC, og alle opgavens funktionskrav er opfyldt --- inklusive
+\texttt{find\_common\_ancestor()} og \texttt{is\_related()}, der besvarer
+spørgsmålet om fælles aner, og den store familie med stamtræ. To bevidste valg
+er dokumenteret i bilag F: koden er skrevet på engelsk, så attributterne
+\texttt{name}/\texttt{mom}/\texttt{dad} svarer til klassediagrammets
+\texttt{navn}/\texttt{mor}/\texttt{far}, og \emph{fælles ane} tæller personen
+selv med, så en forælder og et barn regnes som beslægtede --- ellers ville
+spørgsmålet give forkert svar for netop den relation.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{5. Udviklingsprocessen}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Arbejdet er styret af Git på \texttt{dev}-branchen i det fælles repo. Først
+blev designdokumentet skrevet med definitioner, beviser og
+kompleksitetsanalyse; derefter blev programmet implementeret i trin
+(datamodel $\to$ graf $\to$ søgning $\to$ klusterkort $\to$ layout $\to$ view),
+og tests er skrevet undervejs. Testmængden på 25 sammenligner klusterkortet
+med en uafhængig BFS-reference, verificerer identitet (3) på tilfældige
+familier og afprøver dybe kæder, cyklusser, eksporternes pilretning og
+slægtskabsspørgsmålet. Et review af koden fandt fire fejl, som alle blev
+rettet med regressionstests: en omvendt tekst i \texttt{\_\_str\_\_}, en
+vendt pilretning i de eksporterede diagrammer, en falsk cyklusfejl i
+målsøgningen og en rekursionsgrænse ved meget dybe familier. Commit-oversigt
+med datoer og de krævede skærmdump findes i bilag D.
+\textbf{Arbejdsfordeling:} \textit{(gruppen beskriver fordelingen her)}.
+
+Overvejelser omkring det færdige produkt: styrkerne er det matematiske
+fundament og testmængden, som dokumenterer både korrekthed og kompleksitet,
+samt at programmet er lille og gennemskueligt. Begrænsningerne er, at
+befolkningen er indbygget i koden (ingen indlæsning fra fil eller database),
+at modellen følger opgaven og kun tillader to forældre pr. person, og at
+Mermaid/Graphviz-uddragene skal renderes eksternt. Naturlige udvidelser vil
+være filindlæsning, en grafisk brugerflade og en mere generel forældremodel.
+
+\newpage
 
 % ═════════════════════════════════════════════════════════════════════════════
 \section*{Bilag A. Programstruktur og MVC-arkitektur}
@@ -102,16 +290,22 @@ ved udskrift.
 
 \begin{lstlisting}[language=Python]
 class Person:
+    DEFAULT_NAMES: ClassVar[dict[str, str]] = {
+        "male": "John Doe",
+        "female": "Jane Doe",
+        "other": "Alex Doe",
+    }
+
     def __init__(
         self,
-        name: str = "John Doe",
+        name: str | None = None,
         mom: Person | None = None,
         dad: Person | None = None,
         pronouns: Pronouns | None = None,
     ):
         self.mom = mom
         self.dad = dad
-        self.name = name
+        self.name = name if name is not None else self.default_name(pronouns)
         self.pronouns = pronouns or Pronouns.from_preset("they")
 
     def __str__(self) -> str:
@@ -459,12 +653,13 @@ SKÆRMDUMP 2 (indsat her): commit-oversigt med datoer ---
 \section*{Bilag E. Verifikation: kørsel og tests}
 % ═════════════════════════════════════════════════════════════════════════════
 
-\texttt{poetry run pytest} giver 23 tests, som dækker verifikationsplanens \S 8:
+\texttt{poetry run pytest} giver 25 tests, som dækker verifikationsplanens \S 8:
 klusterkort sammenlignes med en uafhængig BFS-reference, identitet (3)
 $k = n - s$ holdes på tilfældige populationer, dybe kæder klarer de iterative
-traverseringer, cyklusser afvises, skaleringen er nær-lineær, og
+traverseringer, cyklusser afvises, skaleringen er nær-lineær,
 slægtskabsspørgsmålet fra \S 7.10 er dækket (\texttt{find\_common\_ancestor},
-\texttt{is\_related}).
+\texttt{is\_related}), og \texttt{Person}-klassens opførsel er fastholdt
+(\texttt{\_\_str\_\_}, standardnavne efter stedord).
 
 Udskrift fra \texttt{poetry run python src} (uddrag):
 
@@ -517,7 +712,9 @@ Opret personer og forbind dem
 \texttt{\_\_str\_\_} a la ``Navn Nikolaj, mors navn er Anne...''
   & \texttt{Person.\_\_str\_\_} (B1) \\
 Test af \texttt{\_\_str\_\_}
-  & \texttt{test\_person\_dunder\_str} \\
+  & \texttt{test\_person\_dunder\_str\_matches\_book\_style} \\
+Standardnavne efter stedord (John/Jane/Alex Doe)
+  & \texttt{test\_default\_name\_follows\_pronouns} \\
 Stor familie, mindst tre generationer
   & figur \texttt{stor\_familie.pdf} (14 personer, 4 generationer) \\
 Tegn et stamtræ

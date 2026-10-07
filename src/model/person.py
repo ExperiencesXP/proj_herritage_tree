@@ -50,17 +50,32 @@ Pronouns.PRESETS.update(
 
 
 class Person:
+    DEFAULT_NAMES: ClassVar[dict[str, str]] = {
+        "male": "John Doe",
+        "female": "Jane Doe",
+        "other": "Alex Doe",
+    }
+
     def __init__(
         self,
-        name: str = "John Doe",
+        name: str | None = None,
         mom: Person | None = None,
         dad: Person | None = None,
         pronouns: Pronouns | None = None,
     ):
         self.mom = mom
         self.dad = dad
-        self.name = name
+        self.name = name if name is not None else self.default_name(pronouns)
         self.pronouns = pronouns or Pronouns.from_preset("they")
+
+    @classmethod
+    def default_name(cls, pronouns: Pronouns | None) -> str:
+        presets = Pronouns.PRESETS
+        if pronouns == presets["male"]:
+            return cls.DEFAULT_NAMES["male"]
+        if pronouns == presets["female"]:
+            return cls.DEFAULT_NAMES["female"]
+        return cls.DEFAULT_NAMES["other"]
 
     def __str__(self) -> str:
         known: list[str] = []

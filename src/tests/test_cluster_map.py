@@ -281,6 +281,26 @@ def test_str_names_the_unknown_parent_slot(person_cls):
     )
 
 
+def test_person_dunder_str_matches_book_style(person_cls):
+    anne = person_cls("Anne")
+    peter = person_cls("Peter")
+    nikolaj = person_cls("Nikolaj", mom=anne, dad=peter)
+    assert str(nikolaj) == "Nikolaj's mother is Anne and father is Peter."
+    assert str(anne) == "Anne has no known parents."
+
+
+def test_default_name_follows_pronouns(person_cls):
+    from model.person import Pronouns
+
+    presets = Pronouns.PRESETS
+    assert person_cls(pronouns=presets["male"]).name == "John Doe"
+    assert person_cls(pronouns=presets["female"]).name == "Jane Doe"
+    assert person_cls(pronouns=presets["other"]).name == "Alex Doe"
+    assert person_cls(pronouns=presets["they"]).name == "Alex Doe"
+    assert person_cls().name == "Alex Doe"
+    assert person_cls(name="ada").name == "ada"
+
+
 def test_scaling_linear_in_n(person_cls, graph_model_module, cluster_map_module):
     sizes = (500, 1000, 2000)
     samples = {}

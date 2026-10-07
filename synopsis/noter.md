@@ -1,8 +1,9 @@
 # Noter til synopsen "Fælles aner"
 
 Arbejdsnoter til at skrive synopsen (skal være dansk, PDF, maks. 5 normalsider +
-bilag). Bilagsudkastet med kodeeksempler, figurer og git-oversigt ligger klar som
-[`bilag.tex`](bilag.tex) → `bilag.pdf` (kompileret, 8 sider).
+bilag). Det samlede dokument ligger klar som [`synopsis.tex`](synopsis.tex) →
+`synopsis.pdf` (forblad + synopsis + bilag A–F, 14 sider; brødteksten fylder
+under 5 normalsider).
 
 ## Opgavens krav (Projekt.docx) — status
 
@@ -11,7 +12,7 @@ bilag). Bilagsudkastet med kodeeksempler, figurer og git-oversigt ligger klar so
 | Python-program, min. kravene i afsnit 7.10 | opfyldt: se tjeklisten nedenfor |
 | Visualisering med `matplotlib.pyplot` | opfyldt: `src/view.py`, figurer i `out/` |
 | MVC-arkitektur | opfyldt: Model (`model.person`, `model.graph_model`, `model.cluster_map`, `model.search` — pakken `src/model/`), View (`draw`, `view`), Controller (`controller`, `__main__`) |
-| Synopsis i PDF, beskriver udvikling + færdigt program | under arbejde (dette dokument) |
+| Synopsis i PDF, beskriver udvikling + færdigt program | opfyldt: `synopsis.pdf` (afsnit 1–5 + bilag) |
 | Git anvendt til arbejdet | opfyldt: commits fra 28/9, se bilag D |
 | Skærmdump: Git Graph + commits med datoer | **mangler** — manuelle trin nedenfor |
 | Link til projektets kode (fx GitHub) | repoet er privat, se Åbne punkter |
@@ -30,7 +31,7 @@ Sterner), "7.10 Projekt: Fælles aner", side 162–163. Bogen stiller spørgsmå
 | Opret nogle personer og forbind dem | ✅ demo-population + `build_family_graph` |
 | "Hvilken type relation er der tale om?" | ✅ svaret nedenfor — skal med i synopsen |
 | `__str__()` "noget i stil med 'Navn Nikolaj, mors navn er Anne og fars navn er Peter'" | ✅ "nikolaj's mother is anne and father is peter." (engelsk ækvivalent) |
-| "Test at dundermetoden virker efter hensigten" | ✅ `test_person_dunder_str` |
+| "Test at dundermetoden virker efter hensigten" | ✅ `test_person_dunder_str_matches_book_style` + `test_str_names_the_unknown_parent_slot` |
 | "Opret en stor familie med mindst tre generationer" | ✅ `stor_familie`-figuren (14 personer, 4 generationer) + tests op til 20.000 |
 | "Tegn et stamtræ over den familie" | ✅ `view.render_cluster` (matplotlib) — `figurer/stor_familie.pdf` |
 | `find_common_ancestor()` → liste over fælles aner (evt tom) | ✅ `search.find_common_ancestor()` |
@@ -96,7 +97,7 @@ klassediagram i stedet (se bilag F).
 
 ## Fakta og tal (kan citeres direkte)
 
-- **Tests:** `poetry run pytest` → 23 passed, 0 fejl (7. okt. 2026).
+- **Tests:** `poetry run pytest` → 25 passed, 0 fejl (7. okt. 2026).
 - **Demo-eksempel:** $n = 5$ personer, $m = 4$ forældreferencer, $s = 3$
   vellykkede sammenlægninger, $k = 2$ klynger — identitet (3): $k = n - s = 2$.
 - **Stor-familie (7.10):** 14 personer, 4 generationer, 1 klynge; fælles aner for
@@ -137,7 +138,7 @@ klassediagram i stedet (se bilag F).
    "Show Date" eller højreklik kolonneoverskrift).
 
 Gem begge PNG'er i `synopsis/figurer/` og erstat de to rammer nederst i
-`bilag.tex` (bilag D) med `\includegraphics`.
+`synopsis.tex` (bilag D) med `\includegraphics`.
 
 ## Figurer
 
@@ -157,8 +158,9 @@ PNG-kopier ligger ved siden af (til preview/README).
 - **Repoet er privat:** synopsen skal ifølge opgaven indeholde et *link* til
   koden — giv læreren adgang (GitHub → Settings → Collaborators) eller vedhæft
   koden som kodebilag i stedet.
-- `bilag.tex` er et udkast: de to skærmdump-rammer skal fyldes. Koden er renset
-  for kommentarer og docstrings (okt. 2026), så forklaringerne ligger i prose
-  rundt om kodeuddragene — præcis som bilag B1–B8 er bygget.
+- `synopsis.tex` er et udkast: forbladets navne/dato og de to skærmdump-rammer
+  skal fyldes. Koden er renset for kommentarer og docstrings (okt. 2026), så
+  forklaringerne ligger i prose rundt om kodeuddragene — præcis som bilag B1–B8
+  er bygget.
 - Overvej om Mermaid-uddragene skal vises som renderede diagrammer i bilaget
   (kan renderes på GitHub/i VS Code-udvidelsen Mermaid).

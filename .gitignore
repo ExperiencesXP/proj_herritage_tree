@@ -10,3 +10,9 @@ synopsis/bilag.fdb_latexmk
 synopsis/bilag.fls
 synopsis/.hermes-tmp*
 synopsis/*.synctex.gz
+synopsis/synopsis.aux
+synopsis/synopsis.log
+synopsis/synopsis.out
+synopsis/synopsis.fdb_latexmk
+synopsis/synopsis.fls
+synopsis/pages.txt

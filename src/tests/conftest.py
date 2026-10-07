@@ -1,10 +1,3 @@
-"""Shared fixtures for the test suite of `docs/cluster_map_and_recursive_search.md`.
-
-The tests import sibling modules (``person``, ``graph_model``, ``search``, ``cluster_map``,
-``draw``) as top-level names; that works because ``pyproject.toml`` puts ``src`` on
-``sys.path`` via ``[tool.pytest.ini_options] pythonpath``.
-"""
-
 from __future__ import annotations
 
 import sys
@@ -13,27 +6,19 @@ from pathlib import Path
 import pytest
 
 SRC = Path(__file__).resolve().parents[1]
-if str(SRC) not in sys.path:  # standalone `pytest src/tests` also works
+if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 
 @pytest.fixture()
 def person_cls():
-    """The ``Person`` type, imported lazily so collection never fails on missing deps."""
-    import person
+    from model import person
 
     return person.Person
 
 
 @pytest.fixture()
 def family(person_cls):
-    """A two-cluster family used across fixtures (§1.3):
-
-    * ``collapse`` cluster — pedigree collapse (I3): ``kid``'s mom ``mia`` and dad ``dan``
-      share the ancestor ``ada`` (mia's dad == dan's dad == ada), so
-      |Anc(kit)| < 2^{g+1} - 1.
-    * ``solo`` cluster — an unrelated single person (edges never cross clusters).
-    """
     ada = person_cls("ada")
     mia = person_cls("mia", mom=ada)
     dan = person_cls("dan", dad=ada)
@@ -51,7 +36,6 @@ def family(person_cls):
 
 @pytest.fixture()
 def family_graph(family, graph_model_module):
-    """The :class:`FamilyGraph` view over :func:`family`'s five persons."""
     return graph_model_module.build_family_graph(
         [family["ada"], family["mia"], family["dan"], family["kid"], family["solo"]]
     )
@@ -59,21 +43,21 @@ def family_graph(family, graph_model_module):
 
 @pytest.fixture(scope="session")
 def graph_model_module():
-    import graph_model
+    from model import graph_model
 
     return graph_model
 
 
 @pytest.fixture(scope="session")
 def search_module():
-    import search
+    from model import search
 
     return search
 
 
 @pytest.fixture(scope="session")
 def cluster_map_module():
-    import cluster_map
+    from model import cluster_map
 
     return cluster_map
 

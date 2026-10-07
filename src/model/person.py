@@ -1,12 +1,3 @@
-"""Family data model: `Person` / `Pronouns` (docs/cluster_map_and_recursive_search.md §1).
-
-``V`` in the design doc is the population of :class:`Person` objects; ``Person.mom`` /
-``Person.dad`` are the two parental edges (invariant **I1**: ``deg⁻(v) ≤ 2``, so
-``m = |E| ≤ 2n``).  ``Person.name`` is the natural key used by external maps and Mermaid
-labels.  The presentation helpers (``__str__``, ``pronoun``) play no role in the algorithms
-and live here so the graph modules stay presentation-free.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -81,7 +72,6 @@ class Person:
         if not known:
             return f"{self.name} has no known parents."
         if len(known) == 1:
-            # exactly one parent known: name the *other* one as the unknown slot
             known.append("no known father" if self.mom else "no known mother")
 
         return f"{self.name}'s " + " and ".join(known) + "."

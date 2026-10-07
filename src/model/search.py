@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Callable, Iterable
 from typing import Any
 
-from graph_model import FamilyGraph
+from model.graph_model import FamilyGraph
 
 __all__ = [
     "explore",
@@ -25,20 +25,18 @@ NeighboursFn = Callable[[Any], Iterable[Any]]
 
 
 class CycleError(ValueError):
-    """Raised by the 3-colour guard when the parental record contains a cycle."""
+    pass
 
 
 class StopSearch(Exception):
-    """Internal early-exit signal for goal-directed search (optimisation O7)."""
+    pass
 
 
 def neighbours_of(graph: FamilyGraph) -> NeighboursFn:
-    """Bind a traversal to a :class:`FamilyGraph`'s undirected adjacency (Ē)."""
     return graph.neighbours
 
 
 def _parents(node: Any) -> tuple[Any, ...]:
-    """Parent slots of a person-like object (child → parent direction, §1.1)."""
     return tuple(
         q
         for q in (getattr(node, "mom", None), getattr(node, "dad", None))
@@ -69,11 +67,6 @@ def explore_iterative(
     members: set[Any] | None = None,
     neighbours: NeighboursFn | None = None,
 ) -> set[Any]:
-    """Production traversal: same output set as :func:`explore`, explicit stack (O5).
-
-    A chain of n = 2000 persons overflows Python's default R = 1000 frames in the
-    recursive form (§4.2); this form only bounds its stack by the frontier size.
-    """
     seen = members if members is not None else set()
     if node is None:
         return seen
@@ -94,27 +87,12 @@ def explore_safe(
     *,
     on_node: Callable[[Any], bool] | None = None,
 ) -> int:
-    """3-colour depth-first search of §2.6; returns the number of vertices BLACKened.
-
-    ``colour`` maps node → state with 1 = GRAY (on the stack) and 2 = BLACK; a missing key
-    is WHITE.  A GRAY back edge signals a cycle and raises :class:`CycleError` (a
-    ``ValueError``) *before* the traversal can diverge — invariant I2 is enforced, not
-    assumed (Theorem 3.4).
-
-    Only sound on the **directed** parental neighbourhood (the default): in the
-    undirected shadow Ē every tree edge doubles back to a GRAY parent and would be
-    misreported as a cycle.  Use :func:`explore_iterative` (visited guard) on Ē.
-
-    ``on_node`` is an optional goal predicate: when it returns True the search raises
-    :class:`StopSearch` for early exit (O7) — worst case unchanged, expected cost d·b̄
-    instead of n when the goal is near.
-    """
     if node is None:
         return 0
     state = colour.get(node)
-    if state == 2:  # BLACK
+    if state == 2:
         return 0
-    if state == 1:  # GRAY → back edge ⇒ cycle
+    if state == 1:
         raise CycleError("cycle in parental record")
     colour[node] = 1
     if on_node is not None and on_node(node):
@@ -127,16 +105,6 @@ def explore_safe(
 
 
 def ancestors(p: Any) -> frozenset[Any]:
-    """Memoised ancestral closure of §2.5: Anc(v) = {v} ∪ Anc(mom(v)) ∪ Anc(dad(v)).
-
-    The per-seed cache is memoisation O2: each node is computed exactly once and reused,
-    so a closure over a lattice-shaped pedigree costs Θ(n + m) instead of Θ(φ^d) for
-    Fibonacci pedigrees or Θ(2^{d/2}) for diamond chains (§4.3).
-
-    Reference recursion (O5): the frame depth is still Θ(d), so a pure chain past
-    CPython's R = 1000 raises ``RecursionError`` — use :func:`ancestors_iterative`
-    on the production path, exactly like :func:`explore` vs :func:`explore_iterative`.
-    """
     cache: dict[Any, frozenset[Any]] = {}
 
     def closure(node: Any) -> frozenset[Any]:
@@ -153,15 +121,6 @@ def ancestors(p: Any) -> frozenset[Any]:
 
 
 def ancestors_iterative(p: Any) -> frozenset[Any]:
-    """Production form of :func:`ancestors` (O5): same closure, explicit stack.
-
-    The recurrence of §2.5 is evaluated bottom-up (post-order) with the same per-seed
-    memo cache — each node is computed exactly once, Θ(n + m) by the potential argument
-    of §4.3 — but without nesting Θ(d) Python frames: a 2000-person chain overflows the
-    recursion limit in :func:`ancestors`, not here.  ``on_stack`` reuses the GRAY colour
-    of §2.6: a node re-entered while still expanding is a back edge, so a parental cycle
-    (violating I2) raises :class:`CycleError` instead of looping forever.
-    """
     if p is None:
         return frozenset()
     cache: dict[Any, frozenset[Any]] = {}
@@ -171,7 +130,7 @@ def ancestors_iterative(p: Any) -> frozenset[Any]:
         node, expanded = stack.pop()
         if node is None:
             continue
-        if expanded:  # both parents cached: fold the recurrence for this node
+        if expanded:
             out = {node}
             for q in (node.mom, node.dad):
                 if q is not None:
@@ -181,7 +140,7 @@ def ancestors_iterative(p: Any) -> frozenset[Any]:
             continue
         if node in cache:
             continue
-        if node in on_stack:  # GRAY re-entry = cycle (§2.6)
+        if node in on_stack:
             raise CycleError("cycle in parental record")
         on_stack.add(node)
         stack.append((node, True))
@@ -192,21 +151,12 @@ def ancestors_iterative(p: Any) -> frozenset[Any]:
 
 
 def descendants(graph: FamilyGraph, p: Any) -> frozenset[Any]:
-    """All descendants of ``p`` via ``child_index`` (§2.2) — the mirror of :func:`ancestors`."""
     if p is None:
         return frozenset()
     return frozenset(explore_iterative(p, neighbours=graph.children)) - {p}
 
 
 def find_common_ancestor(a: Any, b: Any) -> list[Any]:
-    """Every common ancestor of ``a`` and ``b`` as a list (project requirement 7.10).
-
-    Returns all persons that are ancestors of *both* — an empty list when there is
-    none.  The closure of §2.5 includes the person itself, which is exactly what the
-    question "har to personer mindst en fælles ane?" needs: a parent and a child count
-    as related because the parent is an ancestor of both.  Two memoised closures
-    (Θ(n + m) together) plus the set intersection.
-    """
     if a is None or b is None:
         return []
     shared = ancestors_iterative(a) & ancestors_iterative(b)
@@ -214,7 +164,6 @@ def find_common_ancestor(a: Any, b: Any) -> list[Any]:
 
 
 def is_related(a: Any, b: Any) -> bool:
-    """``True`` iff ``a`` and ``b`` share at least one common ancestor (7.10)."""
     if a is None or b is None:
         return False
     return not ancestors_iterative(a).isdisjoint(ancestors_iterative(b))
@@ -225,16 +174,6 @@ def find_with_early_exit(
     goal: Callable[[Any], bool],
     neighbours: NeighboursFn | None = None,
 ) -> Any | None:
-    """Goal-directed search returning the first match, with early exit (O7).
-
-    The visited-guarded iterative form (O5) is used on purpose instead of the 3-colour
-    guard of :func:`explore_safe`: the goal search may run over the undirected shadow Ē
-    (cluster membership), where the 3-colour "back edge" test would report a cycle for
-    every ordinary parent-child pair.  The visited guard is the correct fixed-point
-    stabilisation on Ē (Lemma 3.1); I2 diagnostics belong to :func:`draw.validate_acyclic`
-    on the directed parental graph.  Worst case unchanged (Θ(n + m)); when the goal sits
-    near the seed the unexplored branches are pruned, expected cost ≈ d·b̄ (O7).
-    """
     if node is None:
         return None
     seen: set[Any] = set()

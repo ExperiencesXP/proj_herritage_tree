@@ -1,24 +1,10 @@
-"""Explicit graph view over the family data — `docs/cluster_map_and_recursive_search.md` §1.
-
-``V`` is the population of :class:`person.Person` objects, ``E = {(p, mom(p)), (p, dad(p))}``
-is the child → parent edge set, and ``Ē`` is its undirected shadow (cluster membership is
-orientation-insensitive, §1.1).  Invariant **I1** (``deg⁻(v) ≤ 2``) yields ``m = |E| ≤ 2n``
-(§1.2, equation 1), so every ``O(n + m)`` traversal in this project is ``Θ(n)``.
-
-This module provides the building blocks the analysis calls for:
-
-* ``child_index``   — the one-time reverse parent → child index (§2.2, guardrail O1/§5),
-* dense integer ids — arrays instead of hash lookups (optimisation O4),
-* CSR adjacency     — contiguous neighbour lists for large clusters (optimisation O6).
-"""
-
 from __future__ import annotations
 
 from array import array
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
-from person import Person
+from model.person import Person
 
 __all__ = [
     "FamilyGraph",
@@ -36,7 +22,6 @@ Pair = tuple[Person, Person]
 
 @dataclass(frozen=True, slots=True)
 class FamilyGraph:
-    """Immutable graph view: dense ids (O4) plus the one-time reverse index (O1)."""
 
     persons: tuple[Person, ...]
     id_of: dict[Person, int]
@@ -44,24 +29,16 @@ class FamilyGraph:
 
     @property
     def n(self) -> int:
-        """``|V|``."""
         return len(self.persons)
 
     @property
     def m(self) -> int:
-        """``|E|`` — at most ``2n`` by invariant I1 (equation 1)."""
         return sum(1 for p in self.persons for q in (p.mom, p.dad) if q is not None)
 
     def children(self, p: Person) -> tuple[Person, ...]:
-        """All persons with ``p`` in a parent slot (the reverse index, Õ(1) lookup)."""
         return self.child_index.get(p, ())
 
     def neighbours(self, p: Person) -> tuple[Person, ...]:
-        """Undirected neighbourhood in ``Ē`` (parents ∪ children), self-loops dropped.
-
-        Cluster traversals (§2.2) walk exactly this adjacency, which is why they are
-        orientation-insensitive.
-        """
         seen: set[Person] = {p}
         out: list[Person] = []
         for q in (p.mom, p.dad, *self.child_index.get(p, ())):
@@ -72,11 +49,6 @@ class FamilyGraph:
 
 
 def close_population(persons: Iterable[Person]) -> tuple[Person, ...]:
-    """Return ``persons`` plus every ancestor they reference (transitively), in BFS order.
-
-    Edges never cross clusters (§1.3): a person and its missing parents must land in the
-    same cluster, so the population is closed upward before anything is indexed.  O(n).
-    """
     order: list[Person] = []
     seen: set[Person] = set()
     for person in persons:
@@ -97,15 +69,6 @@ def close_population(persons: Iterable[Person]) -> tuple[Person, ...]:
 def build_family_graph(
     persons: Iterable[Person], *, include_ancestors: bool = False
 ) -> FamilyGraph:
-    """Index a population into a :class:`FamilyGraph` in one ``O(n)`` pass.
-
-    The reverse ``child_index`` (§2.2) is built **here, once** — rebuilding it inside a
-    traversal would regrow the cost to ``O(n·m)`` (see the O1 guardrails in §5).
-
-    Raises ``ValueError`` if the same :class:`Person` appears twice, or if a parent link
-    points outside the population unless ``include_ancestors`` collects those ancestors
-    automatically (:func:`close_population`).
-    """
     ordered = close_population(persons) if include_ancestors else tuple(persons)
     id_of: dict[Person, int] = {}
     for index, p in enumerate(ordered):
@@ -133,7 +96,6 @@ def build_family_graph(
 
 
 def parent_edges(graph: FamilyGraph) -> Iterator[Pair]:
-    """Iterate ``E`` as ``(child, parent)`` pairs (skipping empty slots)."""
     for p in graph.persons:
         for q in (p.mom, p.dad):
             if q is not None:
@@ -141,12 +103,6 @@ def parent_edges(graph: FamilyGraph) -> Iterator[Pair]:
 
 
 def undirected_edges(graph: FamilyGraph) -> Iterator[Pair]:
-    """Iterate ``Ē`` without duplicates (self-loops are dropped).
-
-    Pairs keep the **child → parent** orientation of ``E`` (§1.1) even though connectivity
-    is orientation-insensitive: the layout passes of §6 (rank assignment, arrow direction
-    in exports) need to know which endpoint is the parent.
-    """
     seen: set[tuple[int, int]] = set()
     for u, v in parent_edges(graph):
         if u is v:
@@ -155,21 +111,15 @@ def undirected_edges(graph: FamilyGraph) -> Iterator[Pair]:
         if (a, b) in seen:
             continue
         seen.add((a, b))
-        yield u, v  # (child, parent) as produced by parent_edges
+        yield u, v
 
 
 @dataclass(frozen=True, slots=True)
 class CsrAdjacency:
-    """Compressed-sparse-row adjacency of ``Ē`` (optimisation O6).
-
-    ``offset[i] .. offset[i+1]`` indexes into ``edges``, which stores the dense ids of
-    ``persons``.  Traversals become sequential scans of whole arrays instead of
-    pointer chasing — the layout code (§6) and big-cluster traversals use this.
-    """
 
     persons: tuple[Person, ...]
-    offset: array  # 'i', len n + 1
-    edges: array  # 'i', concatenated neighbourhoods
+    offset: array
+    edges: array
 
     def neighbour_ids(self, i: int) -> array:
         return self.edges[self.offset[i] : self.offset[i + 1]]
@@ -178,7 +128,6 @@ class CsrAdjacency:
 def build_csr(
     graph: FamilyGraph, members: Iterable[Person] | None = None
 ) -> CsrAdjacency:
-    """Build the CSR adjacency of ``Ē`` over ``members`` (or the whole population)."""
     ordered = tuple(members) if members is not None else graph.persons
     local = {p: i for i, p in enumerate(ordered)}
     offsets: list[int] = [0]
@@ -196,11 +145,6 @@ def build_csr(
 
 
 def reach_csr(csr: CsrAdjacency, seed: int) -> tuple[Person, ...]:
-    """Connected component of ``csr.persons[seed]`` scanned straight from the arrays.
-
-    Used to cross-check the recursive search (§8.1) and to traverse huge clusters
-    without touching anything but contiguous ints (O6).
-    """
     seen = bytearray(len(csr.persons))
     seen[seed] = 1
     stack = [seed]

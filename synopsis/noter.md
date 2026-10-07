@@ -10,7 +10,7 @@ bilag). Bilagsudkastet med kodeeksempler, figurer og git-oversigt ligger klar so
 |---|---|
 | Python-program, min. kravene i afsnit 7.10 | opfyldt: se tjeklisten nedenfor |
 | Visualisering med `matplotlib.pyplot` | opfyldt: `src/view.py`, figurer i `out/` |
-| MVC-arkitektur | opfyldt: Model (`person`, `graph_model`, `cluster_map`, `search`), View (`draw`, `view`), Controller (`controller`, `__main__`) |
+| MVC-arkitektur | opfyldt: Model (`model.person`, `model.graph_model`, `model.cluster_map`, `model.search` — pakken `src/model/`), View (`draw`, `view`), Controller (`controller`, `__main__`) |
 | Synopsis i PDF, beskriver udvikling + færdigt program | under arbejde (dette dokument) |
 | Git anvendt til arbejdet | opfyldt: commits fra 28/9, se bilag D |
 | Skærmdump: Git Graph + commits med datoer | **mangler** — manuelle trin nedenfor |
@@ -24,7 +24,7 @@ Sterner), "7.10 Projekt: Fælles aner", side 162–163. Bogen stiller spørgsmå
 
 | Krav (bogens ordlyd) | Status i koden |
 |---|---|
-| Program der kan undersøge slægtskab: "Har to personer mindst en fælles ane?" | ✅ `is_related()` + `find_common_ancestor()` (`src/search.py`), via controlleren |
+| Program der kan undersøge slægtskab: "Har to personer mindst en fælles ane?" | ✅ `is_related()` + `find_common_ancestor()` (`src/model/search.py`), via controlleren |
 | "Vi antager at en person kan have en far og en mor" | ✅ `Person(mom, dad)` — begge valgfrie (`None`) |
 | Implementer klassen `Person` fra klassediagrammet (`navn`, `mor`, `far`) | ✅ `name`, `mom`, `dad` + ekstra `pronouns` (engelske navne — se note) |
 | Opret nogle personer og forbind dem | ✅ demo-population + `build_family_graph` |
@@ -157,8 +157,8 @@ PNG-kopier ligger ved siden af (til preview/README).
 - **Repoet er privat:** synopsen skal ifølge opgaven indeholde et *link* til
   koden — giv læreren adgang (GitHub → Settings → Collaborators) eller vedhæft
   koden som kodebilag i stedet.
-- `bilag.tex` er et udkast: kodeuddragene er stand-in for den endelige udvælgelse
-  (docstrings er udeladt/forkortet i uddragene), og de to skærmdump-rammer skal
-  fyldes.
+- `bilag.tex` er et udkast: de to skærmdump-rammer skal fyldes. Koden er renset
+  for kommentarer og docstrings (okt. 2026), så forklaringerne ligger i prose
+  rundt om kodeuddragene — præcis som bilag B1–B8 er bygget.
 - Overvej om Mermaid-uddragene skal vises som renderede diagrammer i bilaget
   (kan renderes på GitHub/i VS Code-udvidelsen Mermaid).

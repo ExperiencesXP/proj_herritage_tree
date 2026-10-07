@@ -1,7 +1,7 @@
 % Bilag til synopsen "Fælles aner" — kodeeksempler, figurer og udviklingsproces.
 % Kompileres med: pdflatex bilag.tex   (MiKTeX, dansk tegnsæt via inputenc/T1)
-% Kodeuddragene er hentet fra src/ på dev-branchen (okt. 2026); koden er uden
-% kommentarer og docstrings, så forklaringerne står i teksten. Figurene
+% Kodeuddragene er hentet fra src/ på dev-branchen (okt. 2026; docstrings er
+% udeladt eller forkortet); figurene
 % genereres af synopsis/figurer/make_figures.py.
 \documentclass[12pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
@@ -150,7 +150,7 @@ ligeglad med orientering.
 \end{lstlisting}
 
 % ─────────────────────────────────────────────────────────────────────────────
-\subsection*{B3. Rekursiv søgning som mindste fast punkt {\small(\texttt{src/model/search.py})}}
+\subsection*{B3. Rekursiv søgning som mindste fast punkt (\texttt{src/search.py})}
 % ─────────────────────────────────────────────────────────────────────────────
 
 Klusteret omkring en start-person $v$ er det \emph{mindste faste punkt} for
@@ -200,7 +200,7 @@ def explore_iterative(
 \end{lstlisting}
 
 % ─────────────────────────────────────────────────────────────────────────────
-\subsection*{B4. Union-Find og identitet (3) (\texttt{src/model/cluster\_map.py})}
+\subsection*{B4. Union-Find og identitet (3) (\texttt{src/cluster\_map.py})}
 % ┐────────────────────────────────────────────────────────────────────────────
 
 Union-Find med union-efter-rang og path-halving forbinder kanter i nær-konstant
@@ -239,7 +239,7 @@ class UnionFind:
 \end{lstlisting}
 
 % ─────────────────────────────────────────────────────────────────────────────
-\subsection*{B5. Memoisering af forfædre-udregningen (\texttt{src/model/search.py})}
+\subsection*{B5. Memoisering af forfædre-udregningen (\texttt{src/search.py})}
 % ─────────────────────────────────────────────────────────────────────────────
 
 Uden cache er rekursionen $\mathrm{Anc}(v) = \{v\} \cup \mathrm{Anc}(\mathrm{mom}(v))

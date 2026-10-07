@@ -37,8 +37,12 @@ kinship queries (`find_common_ancestor`, `is_related`) return the expected answe
 
 ## Architecture (MVC)
 
+The model layer lives in the `src/model/` package and is imported as `model.person`,
+`model.search`, … . The source is deliberately free of comments and docstrings; this
+README, `docs/` and the design document carry the documentation.
+
 | Layer | Modules | Role |
 |---|---|---|
-| Model | `person.py`, `graph_model.py`, `cluster_map.py`, `search.py` | data (`Person`, `FamilyGraph`) and algorithms (cluster map, recursive search) |
+| Model | `model/person.py`, `model/graph_model.py`, `model/cluster_map.py`, `model/search.py` (the `model` package, imported as `model.person` etc.) | data (`Person`, `FamilyGraph`) and algorithms (cluster map, recursive search) |
 | View | `draw.py`, `view.py` | layered Sugiyama layout, Mermaid/Graphviz fragments, matplotlib figures |
 | Controller | `controller.py`, `__main__.py` | `FamilyController` facade + entry point that drives the pipeline |

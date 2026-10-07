@@ -1,15 +1,3 @@
-"""Tests verifying `docs/cluster_map_and_recursive_search.md` implementation — §8.
-
-1. **Correctness (property-based):** DFS vs Union-Find clusters agree with an independent
-   BFS reference; identity (3) ``k = n − s`` holds on every instance (Theorem 3.3).
-2. **Memoisation:** diamond chain D_k — the reference recursion legitimately factors over
-   the DAG Θ(n + m) times instead of re-expanding Θ(φ^d) sub-calls (§4.3).
-3. **Depth safety:** chain n > 1000 — the iterative traversal must complete while the
-   recursive reference raises RecursionError (§4.2, O5).
-4. **Cycles:** self-parent ``p.mom = p`` raises ValueError/CycleError (§2.6, Theorem 3.4).
-5. **Scaling:** builders are near-linear in n with low residual spread.
-"""
-
 from __future__ import annotations
 
 import random
@@ -19,11 +7,7 @@ from types import SimpleNamespace
 import pytest
 
 
-# ---------------------------------------------------------------- helpers
-
-
 def build_children(people):
-    """Reverse parent → child index (one O(n) pass — §2.2)."""
     children: dict = {}
     for p in people:
         for q in (p.mom, p.dad):
@@ -33,15 +17,10 @@ def build_children(people):
 
 
 def undirected_neighbours(node, children):
-    """Neighbours in Ē: parents ∪ children (§1.1) — what cluster membership uses."""
     return [q for q in (node.mom, node.dad, *children.get(node, ())) if q is not None]
 
 
 def bfs_reference(seeds, people):
-    """Independent connected-component check: plain BFS over Ē from the seeds.
-
-    Deliberately separate from `search.py` internals so the test validates the traversal
-    rather than mirroring it (§8.1)."""
     children = build_children(people)
     seen: set = set()
     stack = list(seeds)
@@ -55,7 +34,6 @@ def bfs_reference(seeds, people):
 
 
 def component_count(people):
-    """Number of undirected components of Ē — the reference for identity (3)."""
     children = build_children(people)
     seen: set = set()
     comps = 0
@@ -74,7 +52,6 @@ def component_count(people):
 
 
 def chain(person_cls, length: int, start=None):
-    """A pure chain p0 <- p1 <- ... <- p(length-1), depth Θ(n) (§4.2)."""
     current = start
     for i in range(length):
         current = person_cls(f"chain{i}", mom=current)
@@ -82,7 +59,6 @@ def chain(person_cls, length: int, start=None):
 
 
 def diamond_chain(person_cls, depth: int):
-    """Diamond chain D_k of §4.3: a_i -> {b_i, c_i} -> a_{i+1} (collapse family I3)."""
     tip = person_cls("a0")
     for i in range(depth):
         b_i = person_cls(f"b{i}", mom=tip)
@@ -91,11 +67,7 @@ def diamond_chain(person_cls, depth: int):
     return tip
 
 
-# ---------------------------------------------------------------- randomized population
-
-
 def random_population(person_cls, rng, target: int = 60):
-    """Random persons with known parents so that deg⁻ ≤ 2 (invariant I1)."""
     people = [person_cls(f"p{i}") for i in range(min(target, 8))]
     while len(people) < target:
         if rng.random() < 0.75 and len(people) >= 2:
@@ -108,9 +80,6 @@ def random_population(person_cls, rng, target: int = 60):
             child = person_cls(f"p{len(people)}")
         people.append(child)
     return people
-
-
-# ---------------------------------------------------------------- 1. correctness
 
 
 def test_cluster_matches_bfs_reference(person_cls, graph_model_module, cluster_map_module):
@@ -149,13 +118,10 @@ def test_cluster_count_identity_eq3(person_cls, graph_model_module, cluster_map_
             if uf.union(idx[u], idx[v]):
                 s += 1
 
-        assert uf_map.k == n - s  # identity (3)
+        assert uf_map.k == n - s
         assert uf_map.k == len(uf_map.clusters)
-        assert component_count(people) == n - s  # spanning-forest rank identity (Thm 3.3)
+        assert component_count(people) == n - s
         assert component_count(people) == uf_map.k
-
-
-# ---------------------------------------------------------------- 2. ancrs/memoization
 
 
 def test_ancestor_closure_size_classical_family(person_cls, search_module):
@@ -166,22 +132,16 @@ def test_ancestor_closure_size_classical_family(person_cls, search_module):
 
     closure = search_module.ancestors(seed)
     assert closure == {seed, parent1, g1, g2}
-    assert len(closure) == 4  # no collapse: |A_2|+|A_1|+|A_0| = 2+1+1 = 4
+    assert len(closure) == 4
 
 
 def test_memoised_closure_handles_pedigree_collapse(person_cls, search_module):
     tip = diamond_chain(person_cls, 12)
     closure = search_module.ancestors(tip)
-    # Diamond chain D_12 has 13*a + 2*12 collapse nodes = 37 distinct nodes:
     assert len(closure) == 13 + 2 * 12
-    # The memoised run must finish quickly (< 2s) even though un-memoised the naive
-    # recurrence is Θ(φ^d) ≈ 1.618^12 ≈ 321 sub-calls deep (§4.3).
     start = time.perf_counter()
     search_module.ancestors(tip)
     assert time.perf_counter() - start < 2.0
-
-
-# ---------------------------------------------------------------- 3. depth safety
 
 
 def test_iterative_survives_deep_chain(person_cls, search_module):
@@ -191,7 +151,7 @@ def test_iterative_survives_deep_chain(person_cls, search_module):
 
 
 def test_recursive_reference_raises_recursionerror(person_cls, search_module):
-    tip = chain(person_cls, 1500)  # comfortably past CPython default R = 1000
+    tip = chain(person_cls, 1500)
     with pytest.raises(RecursionError):
         search_module.explore(tip, set(), [], neighbours=lambda p: (p.mom,))
 
@@ -203,7 +163,7 @@ def test_ancestors_iterative_matches_reference(person_cls, search_module):
 
 
 def test_ancestors_iterative_survives_deep_chain(person_cls, search_module):
-    tip = chain(person_cls, 2000)  # the reference recursion overflows here (O5)
+    tip = chain(person_cls, 2000)
     closure = search_module.ancestors_iterative(tip)
     assert len(closure) == 2000
 
@@ -212,7 +172,7 @@ def test_ancestors_iterative_flags_cycles(person_cls, search_module):
     a, b = person_cls("a"), person_cls("b")
     a.mom = b
     b.mom = a
-    with pytest.raises(ValueError):  # CycleError subclasses ValueError (§2.6)
+    with pytest.raises(ValueError):
         search_module.ancestors_iterative(a)
 
 
@@ -223,13 +183,10 @@ def test_common_ancestors_and_is_related(person_cls, search_module):
     kid = person_cls("kid", mom=mia, dad=dan)
     solo = person_cls("solo")
 
-    # project requirement 7.10: fælles aner + slægtskab
     assert [p.name for p in search_module.find_common_ancestor(mia, dan)] == ["ada"]
     assert search_module.is_related(mia, dan) is True
     assert search_module.find_common_ancestor(kid, solo) == []
     assert search_module.is_related(kid, solo) is False
-    # the §2.5 closure includes the person itself, so ancestor/descendant count as
-    # related (the parent is an ancestor of both)
     assert search_module.is_related(ada, kid) is True
     assert [p.name for p in search_module.find_common_ancestor(ada, kid)] == ["ada"]
     assert search_module.find_common_ancestor(None, kid) == []
@@ -247,8 +204,6 @@ def test_goal_search_over_undirected_shadow_has_no_false_cycles(person_cls, sear
             c for c in (mia, dan, kid) if c.mom is p or c.dad is p
         ]
 
-    # the diamond in Ē doubles every tree edge back to a GRAY parent; a goal search
-    # there must use the visited guard (Lemma 3.1), not the 3-colour cycle guard
     assert (
         search_module.find_with_early_exit(
             kid, lambda p: p.name == "solo", neighbours=neighbours
@@ -261,14 +216,11 @@ def test_goal_search_over_undirected_shadow_has_no_false_cycles(person_cls, sear
     assert found is not None and found.name == "ada"
 
 
-# ---------------------------------------------------------------- 4. cycles
-
-
 def test_self_parent_cycle_raises(person_cls, draw_module):
     person = person_cls("self_parent")
     person.mom = person
     graph = SimpleNamespace(persons=(person,))
-    with pytest.raises(ValueError):  # CycleError subclasses ValueError (§2.6)
+    with pytest.raises(ValueError):
         draw_module.validate_acyclic(graph)
 
 
@@ -281,19 +233,15 @@ def test_longer_cycle_raises(person_cls, draw_module):
         draw_module.validate_acyclic(graph)
 
 
-# ---------------------------------------------------------------- 5. drawing (§6)
-
-
 def test_layout_rank_and_y_coordinate(person_cls, cluster_map_module, graph_model_module, draw_module):
-    chain_tip = chain(person_cls, 6)  # 6 persons: chain0 (oldest) ... chain5 (tip)
-    graph = graph_model_module.build_family_graph([chain_tip], include_ancestors=True)  # chain ancestors are outside the seed list
+    chain_tip = chain(person_cls, 6)
+    graph = graph_model_module.build_family_graph([chain_tip], include_ancestors=True)
     cmap = cluster_map_module.build_cluster_map(graph)
     cluster = cmap.clusters[0]
     layout = draw_module.layout_cluster(cluster)
 
-    assert layout.ranks[chain_tip] == 5  # longest-path: the tip is the deepest node
+    assert layout.ranks[chain_tip] == 5
     assert max(layout.ranks.values()) == 5
-    # Coordinates pass 3: x = per-layer position (0..), y = rank * Δ
     delta = layout.delta
     for person in cluster.members:
         assert layout.y[person] == pytest.approx(layout.ranks[person] * delta)
@@ -301,8 +249,8 @@ def test_layout_rank_and_y_coordinate(person_cls, cluster_map_module, graph_mode
 
 
 def test_mermaid_export_shape(person_cls, cluster_map_module, graph_model_module, draw_module):
-    kids = chain(person_cls, 4)  # four persons: chain0 (oldest) ... chain3
-    graph = graph_model_module.build_family_graph([kids], include_ancestors=True)  # chain ancestors are outside the seed list
+    kids = chain(person_cls, 4)
+    graph = graph_model_module.build_family_graph([kids], include_ancestors=True)
     cmap = cluster_map_module.build_cluster_map(graph)
     cluster = cmap.clusters[0]
     text = draw_module.to_mermaid(cluster)
@@ -310,18 +258,16 @@ def test_mermaid_export_shape(person_cls, cluster_map_module, graph_model_module
     assert text.startswith("flowchart TB")
     assert "-->" in text
     lines = [line for line in text.splitlines() if "[" in line]
-    assert len(lines) == 4  # four persons rendered as nodes
+    assert len(lines) == 4
 
 
 def test_pairs_map_exports_keep_parent_to_child_arrows(person_cls, cluster_map_module, draw_module):
     a, b, c = person_cls("a"), person_cls("b"), person_cls("c")
-    # (child, parent) pairs per §1.1: b is a's child, c is b's child
     pmap = cluster_map_module.build_cluster_map_pairs([a, b, c], [(b, a), (c, b)])
     text = draw_module.to_mermaid(pmap.clusters[0])
-    # nodes are labelled n0 = a, n1 = b, n2 = c (sorted by name); arrows stay parent -> child
     assert '    n0["a"]' in text
-    assert "    n0 --> n1" in text  # a -> b
-    assert "    n1 --> n2" in text  # b -> c
+    assert "    n0 --> n1" in text
+    assert "    n1 --> n2" in text
 
 
 def test_str_names_the_unknown_parent_slot(person_cls):
@@ -333,9 +279,6 @@ def test_str_names_the_unknown_parent_slot(person_cls):
         str(person_cls("kid", mom=person_cls("mia"), dad=person_cls("dan")))
         == "kid's mother is mia and father is dan."
     )
-
-
-# ---------------------------------------------------------------- 6. scaling
 
 
 def test_scaling_linear_in_n(person_cls, graph_model_module, cluster_map_module):
@@ -355,6 +298,4 @@ def test_scaling_linear_in_n(person_cls, graph_model_module, cluster_map_module)
 
     ratio_small = samples[1000] / max(samples[500], 1e-6)
     ratio_large = samples[2000] / max(samples[1000], 1e-6)
-    # Scaling is recomputed in a new function rather than asserting loop-carried state
-    # (§8.5); generous residual 35% accounts for noise from virtualised environments.
     assert abs(ratio_small - 2.0) < 0.7 or abs(ratio_large - 2.0) < 0.7

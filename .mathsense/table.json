@@ -1,0 +1,1859 @@
+{
+ "doc": "c:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree",
+ "files": [
+  "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex"
+ ],
+ "symbols": [
+  {
+   "glyph": "\\Theta",
+   "latex": "\\Theta",
+   "parts": [
+    "\\Theta"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 34,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 1120,
+     "end": 1126,
+     "in_math": true
+    },
+    {
+     "line": 164,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6237,
+     "end": 6243,
+     "in_math": true
+    },
+    {
+     "line": 164,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6253,
+     "end": 6259,
+     "in_math": true
+    },
+    {
+     "line": 182,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6760,
+     "end": 6766,
+     "in_math": true
+    },
+    {
+     "line": 249,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9114,
+     "end": 9120,
+     "in_math": true
+    },
+    {
+     "line": 250,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9227,
+     "end": 9233,
+     "in_math": true
+    },
+    {
+     "line": 373,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 14263,
+     "end": 14269,
+     "in_math": true
+    },
+    {
+     "line": 416,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16247,
+     "end": 16253,
+     "in_math": true
+    },
+    {
+     "line": 416,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16263,
+     "end": 16269,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "function",
+    "depends_tex": "n",
+    "type_tex": "\\text{function of } (n)",
+    "related_tex": "T, \\alpha, \\varphi, \\varphi^{d}, d, k",
+    "used_in": "7 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\alpha",
+   "latex": "\\alpha",
+   "parts": [
+    "\\alpha"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 34,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 1137,
+     "end": 1143,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\Theta, \\varphi",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\varphi",
+   "latex": "\\varphi",
+   "parts": [
+    "\\varphi"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 34,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 1154,
+     "end": 1161,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\Theta, \\alpha",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\bar{E}",
+   "latex": "\\bar{E}",
+   "parts": [
+    "E"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 36,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 1250,
+     "end": 1257,
+     "in_math": true
+    },
+    {
+     "line": 139,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 5157,
+     "end": 5164,
+     "in_math": true
+    },
+    {
+     "line": 303,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 11226,
+     "end": 11233,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "function",
+    "depends_tex": "u",
+    "type_tex": "\\text{function of } (u)",
+    "related_tex": "\\mathrm{pos}, b, u, w",
+    "used_in": "3 math expression(s)"
+   }
+  },
+  {
+   "glyph": "v",
+   "latex": "v",
+   "parts": [
+    "v"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 100,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 3729,
+     "end": 3730,
+     "in_math": true
+    },
+    {
+     "line": 158,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 5979,
+     "end": 5980,
+     "in_math": true
+    },
+    {
+     "line": 161,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6052,
+     "end": 6053,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7800,
+     "end": 7801,
+     "in_math": true
+    },
+    {
+     "line": 247,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 8990,
+     "end": 8991,
+     "in_math": true
+    },
+    {
+     "line": 247,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 8997,
+     "end": 8998,
+     "in_math": true
+    },
+    {
+     "line": 247,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9032,
+     "end": 9033,
+     "in_math": true
+    },
+    {
+     "line": 248,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9067,
+     "end": 9068,
+     "in_math": true
+    },
+    {
+     "line": 353,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 13432,
+     "end": 13433,
+     "in_math": true
+    },
+    {
+     "line": 551,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 22356,
+     "end": 22357,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "function",
+    "depends_tex": "S",
+    "type_tex": "\\text{function of } (S)",
+    "related_tex": "S, \\bigcup_{\\{u,w\\}\\in\\bar{E},\\, u\\in S}, \\mathrm{Anc}, \\mathrm{dad}, \\mathrm{mom}, \\texttt",
+    "used_in": "8 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\Phi_{v}",
+   "latex": "\\Phi_{v}",
+   "parts": [
+    "\\Phi",
+    "v"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 161,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6038,
+     "end": 6046,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "S, \\bigcup_{\\{u,w\\}\\in\\bar{E},\\, u\\in S}, u, v, w",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "S",
+   "latex": "S",
+   "parts": [
+    "S"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 161,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6045,
+     "end": 6046,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\bigcup_{\\{u,w\\}\\in\\bar{E},\\, u\\in S}, u, v, w",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\bigcup_{\\{u,w\\}\\in\\bar{E},\\, u\\in S}",
+   "latex": "\\bigcup_{\\{u,w\\}\\in\\bar{E},\\, u\\in S}",
+   "parts": [
+    "\\bigcup",
+    "\\{u,w\\}\\in\\bar{E},\\, u\\in S"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 161,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6061,
+     "end": 6098,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "S, u, v, w",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "w",
+   "latex": "w",
+   "parts": [
+    "w"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 161,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6100,
+     "end": 6101,
+     "in_math": true
+    },
+    {
+     "line": 303,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 11220,
+     "end": 11221,
+     "in_math": true
+    },
+    {
+     "line": 303,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 11251,
+     "end": 11252,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "element",
+    "type_tex": "\\bar{E}(u)} \\mathrm{pos}(w)$ --- problemet er",
+    "related_tex": "S, \\bar{E}, \\bigcup_{\\{u,w\\}\\in\\bar{E},\\, u\\in S}, \\mathrm{pos}, b, u",
+    "used_in": "2 math expression(s)"
+   }
+  },
+  {
+   "glyph": "T",
+   "latex": "T",
+   "parts": [
+    "T"
+   ],
+   "definitions": [
+    {
+     "kind": "defining-equation",
+     "line": 164,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6232,
+     "end": 6263,
+     "text": "T = \\Theta(n + m) = \\Theta(n)",
+     "meta": {}
+    },
+    {
+     "kind": "defining-equation",
+     "line": 250,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9222,
+     "end": 9241,
+     "text": "T = \\Theta(n + m)",
+     "meta": {}
+    },
+    {
+     "kind": "defining-equation",
+     "line": 416,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16242,
+     "end": 16273,
+     "text": "T = \\Theta(n + m) = \\Theta(n)",
+     "meta": {}
+    }
+   ],
+   "occurrences": [
+    {
+     "line": 164,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6233,
+     "end": 6234,
+     "in_math": true
+    },
+    {
+     "line": 250,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9223,
+     "end": 9224,
+     "in_math": true
+    },
+    {
+     "line": 416,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16243,
+     "end": 16244,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "T = \\Theta(n + m) = \\Theta(n)",
+    "T = \\Theta(n + m)",
+    "T = \\Theta(n + m) = \\Theta(n)"
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\Theta, m, n, s",
+    "used_in": "3 math expression(s) · 3 defining sentence(s)"
+   }
+  },
+  {
+   "glyph": "n",
+   "latex": "n",
+   "parts": [
+    "n"
+   ],
+   "definitions": [
+    {
+     "kind": "defining-equation",
+     "line": 495,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19894,
+     "end": 19901,
+     "text": "n = 5",
+     "meta": {}
+    }
+   ],
+   "occurrences": [
+    {
+     "line": 164,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6244,
+     "end": 6245,
+     "in_math": true
+    },
+    {
+     "line": 164,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6260,
+     "end": 6261,
+     "in_math": true
+    },
+    {
+     "line": 182,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6767,
+     "end": 6768,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7770,
+     "end": 7771,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7795,
+     "end": 7796,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7822,
+     "end": 7823,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7825,
+     "end": 7826,
+     "in_math": true
+    },
+    {
+     "line": 250,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9234,
+     "end": 9235,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12095,
+     "end": 12096,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12115,
+     "end": 12116,
+     "in_math": true
+    },
+    {
+     "line": 373,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 14270,
+     "end": 14271,
+     "in_math": true
+    },
+    {
+     "line": 415,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16184,
+     "end": 16185,
+     "in_math": true
+    },
+    {
+     "line": 415,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16203,
+     "end": 16204,
+     "in_math": true
+    },
+    {
+     "line": 416,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16254,
+     "end": 16255,
+     "in_math": true
+    },
+    {
+     "line": 416,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16270,
+     "end": 16271,
+     "in_math": true
+    },
+    {
+     "line": 417,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16322,
+     "end": 16323,
+     "in_math": true
+    },
+    {
+     "line": 468,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 18816,
+     "end": 18817,
+     "in_math": true
+    },
+    {
+     "line": 495,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19895,
+     "end": 19896,
+     "in_math": true
+    },
+    {
+     "line": 497,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19997,
+     "end": 19998,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "n = 5",
+    "n = 5"
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "T, \\Theta, \\texttt, c, i, k",
+    "used_in": "12 math expression(s) · 1 defining sentence(s)"
+   }
+  },
+  {
+   "glyph": "m",
+   "latex": "m",
+   "parts": [
+    "m"
+   ],
+   "definitions": [
+    {
+     "kind": "defining-equation",
+     "line": 495,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19903,
+     "end": 19910,
+     "text": "m = 4",
+     "meta": {}
+    }
+   ],
+   "occurrences": [
+    {
+     "line": 164,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6248,
+     "end": 6249,
+     "in_math": true
+    },
+    {
+     "line": 250,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9238,
+     "end": 9239,
+     "in_math": true
+    },
+    {
+     "line": 373,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 14274,
+     "end": 14275,
+     "in_math": true
+    },
+    {
+     "line": 416,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16258,
+     "end": 16259,
+     "in_math": true
+    },
+    {
+     "line": 417,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16315,
+     "end": 16316,
+     "in_math": true
+    },
+    {
+     "line": 495,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19904,
+     "end": 19905,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "m = 4"
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "inferior_tex": "-\\infty",
+    "superior_tex": "2n",
+    "limits_tex": "m \\le 2n",
+    "related_tex": "T, \\Theta, i, n, s",
+    "used_in": "6 math expression(s) · 1 defining sentence(s)"
+   }
+  },
+  {
+   "glyph": "R",
+   "latex": "R",
+   "parts": [
+    "R"
+   ],
+   "definitions": [
+    {
+     "kind": "defining-equation",
+     "line": 183,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6793,
+     "end": 6803,
+     "text": "R = 1000",
+     "meta": {}
+    }
+   ],
+   "occurrences": [
+    {
+     "line": 183,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 6794,
+     "end": 6795,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "R = 1000"
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "used_in": "1 math expression(s) · 1 defining sentence(s)"
+   }
+  },
+  {
+   "glyph": "k",
+   "latex": "k",
+   "parts": [
+    "k"
+   ],
+   "definitions": [
+    {
+     "kind": "defining-equation",
+     "line": 211,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7759,
+     "end": 7843,
+     "text": "k = n - s, \\qquad s = \\text{antal vellykkede } \\texttt{union}\\text{-kald}.",
+     "meta": {}
+    },
+    {
+     "kind": "defining-equation",
+     "line": 468,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 18811,
+     "end": 18822,
+     "text": "k = n - s",
+     "meta": {}
+    },
+    {
+     "kind": "defining-equation",
+     "line": 496,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19969,
+     "end": 19976,
+     "text": "k = 2",
+     "meta": {}
+    },
+    {
+     "kind": "defining-equation",
+     "line": 497,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19992,
+     "end": 20015,
+     "text": "k = n - s = 5 - 3 = 2",
+     "meta": {}
+    }
+   ],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7766,
+     "end": 7767,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7805,
+     "end": 7806,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7806,
+     "end": 7807,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7834,
+     "end": 7835,
+     "in_math": true
+    },
+    {
+     "line": 405,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 15768,
+     "end": 15769,
+     "in_math": true
+    },
+    {
+     "line": 406,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 15864,
+     "end": 15865,
+     "in_math": true
+    },
+    {
+     "line": 468,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 18812,
+     "end": 18813,
+     "in_math": true
+    },
+    {
+     "line": 496,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19970,
+     "end": 19971,
+     "in_math": true
+    },
+    {
+     "line": 497,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19993,
+     "end": 19994,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "k = n - s, \\qquad s = \\text{antal vellykkede } \\texttt{union}\\text{-kald}.",
+    "k = n - s, \\qquad s = \\text{antal vellykkede } \\texttt{union}\\text{-kald}.",
+    "k = n - s, \\qquad s = \\text{antal vellykkede } \\texttt{union}\\text{-kald}.",
+    "k = n - s, \\qquad s = \\text{antal vellykkede } \\texttt{union}\\text{-kald}.",
+    "k = n - s, \\qquad s = \\text{antal vellykkede } \\texttt{union}\\text{-kald}.",
+    "k = n - s, \\qquad s = \\text{antal vellykkede } \\texttt{union}\\text{-kald}.",
+    "k = n - s",
+    "k = 2",
+    "k = n - s = 5 - 3 = 2"
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\mathrm{Anc}, \\texttt, g, n, p, s",
+    "used_in": "6 math expression(s) · 4 defining sentence(s)"
+   }
+  },
+  {
+   "glyph": "s",
+   "latex": "s",
+   "parts": [
+    "s"
+   ],
+   "definitions": [
+    {
+     "kind": "defining-equation",
+     "line": 496,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19929,
+     "end": 19936,
+     "text": "s = 3",
+     "meta": {}
+    }
+   ],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7774,
+     "end": 7775,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7784,
+     "end": 7785,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12090,
+     "end": 12091,
+     "in_math": true
+    },
+    {
+     "line": 468,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 18820,
+     "end": 18821,
+     "in_math": true
+    },
+    {
+     "line": 496,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 19930,
+     "end": 19931,
+     "in_math": true
+    },
+    {
+     "line": 497,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 20001,
+     "end": 20002,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    "",
+    "s = 3",
+    "s = 3"
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\texttt, i, k, n, p, x",
+    "used_in": "5 math expression(s) · 1 defining sentence(s)"
+   }
+  },
+  {
+   "glyph": "a",
+   "latex": "a",
+   "parts": [
+    "a"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7794,
+     "end": 7795,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7797,
+     "end": 7798,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7835,
+     "end": 7836,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12100,
+     "end": 12101,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12114,
+     "end": 12115,
+     "in_math": true
+    },
+    {
+     "line": 352,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 13348,
+     "end": 13349,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\mathrm{Anc}, \\texttt, b, i, k, m",
+    "used_in": "3 math expression(s)"
+   }
+  },
+  {
+   "glyph": "t",
+   "latex": "t",
+   "parts": [
+    "t"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7796,
+     "end": 7797,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12092,
+     "end": 12093,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12103,
+     "end": 12104,
+     "in_math": true
+    },
+    {
+     "line": 415,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16182,
+     "end": 16183,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "function",
+    "depends_tex": "n",
+    "type_tex": "\\text{function of } (n)",
+    "related_tex": "\\texttt, c, i, k, n, s",
+    "used_in": "3 math expression(s)"
+   }
+  },
+  {
+   "glyph": "l",
+   "latex": "l",
+   "parts": [
+    "l"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7798,
+     "end": 7799,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7802,
+     "end": 7803,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7803,
+     "end": 7804,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7836,
+     "end": 7837,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12099,
+     "end": 12100,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\texttt, i, k, n, s, x",
+    "used_in": "2 math expression(s)"
+   }
+  },
+  {
+   "glyph": "e",
+   "latex": "e",
+   "parts": [
+    "e"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7801,
+     "end": 7802,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7807,
+     "end": 7808,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7809,
+     "end": 7810,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12102,
+     "end": 12103,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\texttt, i, k, n, s, x",
+    "used_in": "2 math expression(s)"
+   }
+  },
+  {
+   "glyph": "y",
+   "latex": "y",
+   "parts": [
+    "y"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7804,
+     "end": 7805,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12076,
+     "end": 12077,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\texttt, i, k, n, s, x",
+    "used_in": "2 math expression(s)"
+   }
+  },
+  {
+   "glyph": "d",
+   "latex": "d",
+   "parts": [
+    "d"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7808,
+     "end": 7809,
+     "in_math": true
+    },
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7837,
+     "end": 7838,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\texttt, k, n, s",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\texttt",
+   "latex": "\\texttt",
+   "parts": [
+    "\\texttt"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7813,
+     "end": 7820,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "k, n, s",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "u",
+   "latex": "u",
+   "parts": [
+    "u"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7821,
+     "end": 7822,
+     "in_math": true
+    },
+    {
+     "line": 303,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 11192,
+     "end": 11193,
+     "in_math": true
+    },
+    {
+     "line": 303,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 11211,
+     "end": 11212,
+     "in_math": true
+    },
+    {
+     "line": 303,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 11234,
+     "end": 11235,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\bar{E}, \\mathrm{pos}, \\texttt, b, k, n",
+    "used_in": "2 math expression(s)"
+   }
+  },
+  {
+   "glyph": "i",
+   "latex": "i",
+   "parts": [
+    "i"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7823,
+     "end": 7824,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12091,
+     "end": 12092,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12093,
+     "end": 12094,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12097,
+     "end": 12098,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\texttt, k, n, s, x, y",
+    "used_in": "2 math expression(s)"
+   }
+  },
+  {
+   "glyph": "o",
+   "latex": "o",
+   "parts": [
+    "o"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 212,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 7824,
+     "end": 7825,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12089,
+     "end": 12090,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12094,
+     "end": 12095,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\texttt, i, k, n, s, x",
+    "used_in": "2 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\mathrm{Anc}",
+   "latex": "\\mathrm{Anc}",
+   "parts": [
+    "Anc"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 247,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 8977,
+     "end": 8989,
+     "in_math": true
+    },
+    {
+     "line": 247,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9006,
+     "end": 9018,
+     "in_math": true
+    },
+    {
+     "line": 248,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9041,
+     "end": 9053,
+     "in_math": true
+    },
+    {
+     "line": 352,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 13335,
+     "end": 13347,
+     "in_math": true
+    },
+    {
+     "line": 352,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 13356,
+     "end": 13368,
+     "in_math": true
+    },
+    {
+     "line": 353,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 13419,
+     "end": 13431,
+     "in_math": true
+    },
+    {
+     "line": 405,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 15746,
+     "end": 15758,
+     "in_math": true
+    },
+    {
+     "line": 551,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 22343,
+     "end": 22355,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "function",
+    "depends_tex": "v",
+    "type_tex": "\\text{function of } (v)",
+    "related_tex": "\\mathrm{dad}, \\mathrm{mom}, a, b, k, m",
+    "used_in": "6 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\mathrm{mom}",
+   "latex": "\\mathrm{mom}",
+   "parts": [
+    "mom"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 247,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9019,
+     "end": 9031,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "function",
+    "depends_tex": "v",
+    "type_tex": "\\text{function of } (v)",
+    "related_tex": "\\mathrm{Anc}, v",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\mathrm{dad}",
+   "latex": "\\mathrm{dad}",
+   "parts": [
+    "dad"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 248,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9054,
+     "end": 9066,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "function",
+    "depends_tex": "v",
+    "type_tex": "\\text{function of } (v)",
+    "related_tex": "\\mathrm{Anc}, v",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\varphi^{d}",
+   "latex": "\\varphi^{d}",
+   "parts": [
+    "\\varphi",
+    "d"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 249,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 9121,
+     "end": 9132,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\Theta, \\varphi, d",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "b",
+   "latex": "b",
+   "parts": [
+    "b"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 303,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 11190,
+     "end": 11191,
+     "in_math": true
+    },
+    {
+     "line": 352,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 13369,
+     "end": 13370,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    ""
+   ],
+   "meta": {
+    "type_label": "function",
+    "depends_tex": "u",
+    "type_tex": "\\text{function of } (u)",
+    "related_tex": "\\bar{E}, \\mathrm{Anc}, \\mathrm{pos}, a, m, u",
+    "used_in": "2 math expression(s)"
+   }
+  },
+  {
+   "glyph": "\\mathrm{pos}",
+   "latex": "\\mathrm{pos}",
+   "parts": [
+    "pos"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 303,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 11238,
+     "end": 11250,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "function",
+    "depends_tex": "w",
+    "type_tex": "\\text{function of } (w)",
+    "related_tex": "\\bar{E}, b, u, w",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "x",
+   "latex": "x",
+   "parts": [
+    "x"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12073,
+     "end": 12074,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "i, y",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "p",
+   "latex": "p",
+   "parts": [
+    "p"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12088,
+     "end": 12089,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "i, x, y",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "g",
+   "latex": "g",
+   "parts": [
+    "g"
+   ],
+   "definitions": [
+    {
+     "kind": "defining-equation",
+     "line": 406,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 15858,
+     "end": 15866,
+     "text": "g = 2k",
+     "meta": {}
+    }
+   ],
+   "occurrences": [
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12101,
+     "end": 12102,
+     "in_math": true
+    },
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12116,
+     "end": 12117,
+     "in_math": true
+    },
+    {
+     "line": 406,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 15815,
+     "end": 15816,
+     "in_math": true
+    },
+    {
+     "line": 406,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 15859,
+     "end": 15860,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    "",
+    "",
+    "",
+    "g = 2k"
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "i, k, x, y",
+    "used_in": "2 math expression(s) · 1 defining sentence(s)"
+   }
+  },
+  {
+   "glyph": "r",
+   "latex": "r",
+   "parts": [
+    "r"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 322,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 12113,
+     "end": 12114,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "i, x, y",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "D_{k}",
+   "latex": "D_{k}",
+   "parts": [
+    "D",
+    "k"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 404,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 15708,
+     "end": 15713,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "i, k",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "v_{k}",
+   "latex": "v_{k}",
+   "parts": [
+    "v",
+    "k"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 405,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 15759,
+     "end": 15764,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "\\mathrm{Anc}, k, v",
+    "used_in": "1 math expression(s)"
+   }
+  },
+  {
+   "glyph": "c",
+   "latex": "c",
+   "parts": [
+    "c"
+   ],
+   "definitions": [],
+   "occurrences": [
+    {
+     "line": 415,
+     "file": "C:\\Users\\Alexander\\Documents\\Github\\proj_herritage_tree\\synopsis\\bilag.tex",
+     "start": 16195,
+     "end": 16196,
+     "in_math": true
+    }
+   ],
+   "resolved": [
+    ""
+   ],
+   "meta": {
+    "type_label": "scalar",
+    "related_tex": "n, t",
+    "used_in": "1 math expression(s)"
+   }
+  }
+ ]
+}

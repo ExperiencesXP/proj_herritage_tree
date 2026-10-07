@@ -1,16 +1,9 @@
-"""Tests for the MVC layers: `controller.py` (Controller) and `view.py` (matplotlib View).
-
-`Projekt.docx` requires visualisation via ``matplotlib.pyplot`` and MVC architecture;
-these tests pin both: the controller's commands against the model, and the view's
-figure export (rendered headless with the Agg backend into ``tmp_path``).
-"""
-
 from __future__ import annotations
 
 import pytest
 
 matplotlib = pytest.importorskip("matplotlib")
-matplotlib.use("Agg")  # figures are written to disk, never shown, in tests
+matplotlib.use("Agg")
 
 
 @pytest.fixture()
@@ -49,7 +42,6 @@ def test_controller_render_writes_png_per_cluster(app, tmp_path):
 
 
 def test_controller_answers_kinship_question(app):
-    # project requirement 7.10: "Har to personer mindst en fælles ane?"
     assert [p.name for p in app.find_common_ancestor("mia", "dan")] == ["ada"]
     assert app.is_related("mia", "dan") is True
     assert app.is_related("kid", "solo") is False
@@ -58,5 +50,5 @@ def test_controller_answers_kinship_question(app):
 def test_export_orientation_via_controller(app):
     text = app.mermaid_of("kid")
     assert text.startswith("flowchart TB")
-    assert text.count("-->") == 4  # ada->mia, ada->dan, mia->kid, dan->kid
+    assert text.count("-->") == 4
     assert "rankdir=TB" in app.dot_of("kid")

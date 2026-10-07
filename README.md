@@ -1,12 +1,17 @@
-# Herritage Tree
+# Herritage Tree — Fælles aner
 
-Family-tree project ("Fælles aner"): model a `Person` pedigree as a graph, partition it
-into clusters (connected components of the undirected parent shadow), search the clusters
-recursively, and draw one map per cluster.
+Skoleprojekt til afsnit 7.10 ("Projekt: Fælles aner"): en familie modelleres som en
+graf, hvor hver person er en knude, og hver forældreference (`mom`/`dad`) er en kant
+fra forælder til barn. Programmet opdeler befolkningen i klynger (personer der hænger
+sammen via forældre- og børneforbindelser), søger i klyngerne, besvarer spørgsmålet
+"Har to personer mindst en fælles ane?", og tegner ét stamtræ pr. klynge.
 
-Design and analysis are described in the synopsis (`synopsis/synopsis.pdf`).
+Synopsen med kravdokumentation ligger i `synopsis/synopsis.pdf`; figurene i synopsen
+genereres af `synopsis/figurer/make_figures.py`.
 
-## Installing and running
+## Installering og kørsel
+
+Kræver Python 3.12+ og Poetry.
 
 ```bash
 git clone https://github.com/ExperiencesXP/proj_herritage_tree.git && cd proj_herritage_tree
@@ -14,15 +19,16 @@ poetry install
 poetry run python src
 ```
 
-(`poetry env activate | iex` first if you want the venv on your PowerShell prompt — not
-required, `poetry run` handles it. Equivalent launch modes: `poetry run python -m src`
-and `poetry run python src/__main__.py`.)
+(`poetry env activate | iex` først, hvis venv'en skal være aktiv på PowerShell-prompten
+— det er ikke nødvendigt, `poetry run` klarer det. Ækvivalente måder at starte på:
+`poetry run python -m src` og `poetry run python src/__main__.py`.)
 
-The entry point runs the whole pipeline over the demo family — index -> cluster map ->
-search -> layered layout -> Mermaid/Graphviz export -> **matplotlib figures**, written to
-`out/cluster_<id>.png` (the visualisation required by the project assignment), and answers
-the assignment's kinship question from section 7.10 via `is_related()` and
-`find_common_ancestor()`.
+Programmet kører hele pipeline på demo-familien — indeks → klusterkort → søgning →
+lagdelt layout → Mermaid/Graphviz-eksport → **matplotlib-figurer** i
+`out/cluster_<id>.png` (projektets krav om visualisering) — og besvarer
+slægtskabsspørgsmålet fra 7.10 via `is_related()` og `find_common_ancestor()`.
+Udskriften viser bl.a. de fælles aner for to personer, og om en person fra én familie
+er beslægtet med en fra en anden.
 
 ## Tests
 
@@ -30,19 +36,23 @@ the assignment's kinship question from section 7.10 via `is_related()` and
 poetry run pytest
 ```
 
-The suite pins the project's verification plan: cluster maps agree with an
-independent BFS reference, the cluster count equals persons minus merges, deep chains survive the
-iterative traversals, cycles are flagged, the scaling is near-linear, and the 7.10
-kinship queries (`find_common_ancestor`, `is_related`) return the expected answers.
+25 tests fastholder verifikationsplanen: klusterkort sammenlignes med en uafhængig
+bredde-først-reference, antallet af klynger er personer minus sammenlægninger, dybe
+kæder klarer de iterative traverseringer, cyklusser afvises, skaleringen er
+nær-lineær, og 7.10-spørgsmålene (`find_common_ancestor`, `is_related`) giver de
+forventede svar.
 
-## Architecture (MVC)
+## Arkitektur (MVC)
 
-The model layer lives in the `src/models/` package and is imported as `models.person`,
-`models.search`, … . The source is deliberately free of comments and docstrings; this
-README and the synopsis (`synopsis/`) carry the documentation.
+Modellen ligger i pakken `src/models/` og importeres som `models.person`,
+`models.search`, … . Koden er bevidst uden kommentarer og docstrings; dokumentationen
+står her og i synopsen (`synopsis/`). Koden er skrevet på engelsk — attributterne
+`name`, `mom`, `dad` svarer til klassediagrammets `navn`, `mor`, `far`. Standardnavnet
+på en person følger stedordene: `John Doe` ved han-ord, `Jane Doe` ved hun-ord,
+`Alex Doe` ved de-ord og `An Other` ellers.
 
-| Layer | Modules | Role |
+| Lag | Moduler | Rolle |
 |---|---|---|
-| Model | `models/person.py`, `models/graph_model.py`, `models/cluster_map.py`, `models/search.py` (the `models` package) | data (`Person`, `FamilyGraph`) and algorithms (cluster map, recursive search) |
-| View | `draw.py`, `view.py` | layered Sugiyama layout, Mermaid/Graphviz fragments, matplotlib figures |
-| Controller | `controller.py`, `__main__.py` | `FamilyController` facade + entry point that drives the pipeline |
+| Model | `src/models/` (`person`, `graph_model`, `cluster_map`, `search`) | data (`Person`, `FamilyGraph`) og algoritmer (klusterkort, rekursiv søgning, fælles aner) |
+| View | `src/draw.py`, `src/view.py` | lagdelt Sugiyama-layout, Mermaid/Graphviz-uddrag, matplotlib-figurer |
+| Controller | `src/controller.py`, `src/__main__.py` | `FamilyController`-facade og indgangspunktet der kører pipeline |

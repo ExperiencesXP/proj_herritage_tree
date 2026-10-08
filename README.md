@@ -39,5 +39,5 @@ poetry run pytest
 25 tests fastholder verifikationsplanen: klusterkort sammenlignes med en uafhængig
 bredde-først-reference, antallet af klynger er personer minus sammenlægninger, dybe
 kæder klarer de iterative traverseringer, cyklusser afvises, skaleringen er
-nær-lineær, og 7.10-spørgsmålene (`find_common_ancestor`, `is_related`) giver de
+nær-lineær og 7.10-spørgsmålene (`find_common_ancestor`, `is_related`) giver de
 forventede svar.
